@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './_styles/globals.css';
+import localFont from 'next/font/local';
 
-const inter = Inter({ subsets: ['latin'] });
+const pretendard = localFont({
+  src: '../../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '100 200 300 400 500 600 700 800 900',
+  variable: '--font-pretendard',
+});
 
 export const metadata: Metadata = {
   title: 'Gamza',
@@ -19,7 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={pretendard.className}>
+        <div className="min-h-screen flex justify-center items-center">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
