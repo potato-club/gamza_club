@@ -5,7 +5,7 @@ import localFont from 'next/font/local';
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
   display: 'swap',
-  weight: '45 920',
+  weight: '100 200 300 400 500 600 700 800 900',
   variable: '--font-pretendard',
 });
 
@@ -24,7 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <div className="min-h-screen flex justify-center items-center">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
