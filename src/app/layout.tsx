@@ -24,11 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>
-        <div className="min-h-screen flex justify-center items-center">
-          {children}
-        </div>
-      </body>
+      <body className={pretendard.className}>{children}</body>
     </html>
   );
 }

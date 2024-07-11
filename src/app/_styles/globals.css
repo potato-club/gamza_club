@@ -6,10 +6,10 @@
   .bg-background {
     background-color: #fafffa;
   }
-
-  body {
-    @apply bg-background;
+  .main-background {
+    background-color: #ffffff;
   }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
