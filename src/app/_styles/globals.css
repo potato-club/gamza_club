@@ -9,6 +9,19 @@
   .main-background {
     background-color: #ffffff;
   }
+  .modal-background {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .normal-button {
+    display: flex;
+    height: 48px;
+    padding: 0px 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
 
   :root {
     --background: 0 0% 100%;
