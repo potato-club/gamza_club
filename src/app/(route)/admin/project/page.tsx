@@ -2,19 +2,19 @@ import React, { Suspense } from 'react';
 import ButtonList from './components/ButtonList';
 import ProjectItemList from './components/ProjectItemList';
 
-const getdata = async () => {
-  try {
-    const res = await fetch('https://koreanjson.com/posts', {
-      next: { revalidate: 10 },
-    });
-    return res.json();
-  } catch (err) {
-    console.log('getTest1 error!');
-  }
-};
-
 const page = () => {
-  const list = getdata();
+  const getdataISR = async () => {
+    try {
+      const res = await fetch(`https://koreanjson.com/posts/`, {
+        next: { revalidate: 2 },
+      });
+      return res.json();
+    } catch (err) {
+      console.log('getTest1 error!');
+    }
+  };
+
+  const list = getdataISR();
   return (
     <div>
       <ButtonList />
