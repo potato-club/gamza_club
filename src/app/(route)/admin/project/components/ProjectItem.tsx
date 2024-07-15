@@ -12,7 +12,9 @@ const ProjectItem = ({ ...props }: Props) => {
       {/* 프로젝트 이름, 학과 */}
       <div className="flex gap-x-5 h-6">
         <span>{props.id.toString().padStart(4, '0')}</span>
-        <span>{props.name || '김동균'}</span>
+        <span className="flex w-[60px] justify-center">
+          {props.name || '이름'}
+        </span>
         <span className="w-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
           {props.major || '컴퓨터공학과안녕하세'}
         </span>
@@ -30,6 +32,7 @@ const ProjectItem = ({ ...props }: Props) => {
         </div>
         <div className="w-[380px] text-ellipsis overflow-hidden">
           <span className="leading-8 ">
+            {props.email || 'rlaehdrbs580@naver.com'}
             {props.email || 'rlaehdrbs580@naver.com'}
             {props.email || 'rlaehdrbs580@naver.com'}
           </span>
