@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 
 interface Props {
@@ -10,13 +9,7 @@ interface Props {
 }
 const Mutate = ({ className, text, ...props }: Props) => {
   return (
-    <button
-      className={className}
-      onClick={() => {
-        alert('mutate!');
-      }}
-      {...props}
-    >
+    <button className={className} {...props}>
       {text}
     </button>
   );
