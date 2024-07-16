@@ -22,6 +22,16 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
+  .normal-input {
+    height: 45px;
+    padding: 12px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+  }
+  .normal-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
 
   :root {
     --background: 0 0% 100%;
