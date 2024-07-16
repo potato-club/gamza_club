@@ -86,7 +86,7 @@ export default function InputForm({ projectId }: { projectId: number }) {
           )}
         />
         <div className="flex justify-between w-full">
-          <Link href={`/repost?id=${projectId}`}>
+          <Link href={`/repost/${projectId}`}>
             <Button type="button" className="normal-button px-6 h-12">
               재등록
             </Button>
