@@ -3,7 +3,7 @@ import { CardButton, CardInput } from '@/app/_components/server/GamzaCard';
 import InnerLayout from '@/app/_components/server/InnerLayout';
 import Link from 'next/link';
 import React from 'react';
-import Radios from '../RadioGroup';
+import Radios from '../Radios';
 
 const Second = () => {
   return (
