@@ -4,11 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 
 interface Props {
-  type: 'create' | 'modify';
+  type: string;
   total: number;
-  dataType: 'create' | 'modify';
+  dataType: string;
+  text: string;
+  href: string;
 }
-const TypeButton = ({ type, total, dataType }: Props) => {
+const TypeButton = ({ type, total, dataType, text, href }: Props) => {
   const classVariants = {
     on: 'flex normal-button text-black border-black',
     off: 'flex normal-button text-[rgba(0,0,0,0.4)]',
@@ -22,18 +24,13 @@ const TypeButton = ({ type, total, dataType }: Props) => {
     off: '',
   };
 
-  const kr = {
-    create: '생성',
-    modify: '수정',
-  };
-
   return (
     <Link
-      href={`/admin/project?type=${type}`}
+      href={href}
       className={dataType === type ? classVariants.on : classVariants.off}
     >
       <div className={dataType === type ? fontVariants.on : fontVariants.off}>
-        <span>{kr[type]}</span>
+        <span>{text}</span>
         <span
           className={dataType === type ? colorVariants.on : colorVariants.off}
         >
