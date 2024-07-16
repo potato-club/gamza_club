@@ -1,18 +1,14 @@
 import React from 'react';
+import TypeButton from './TypeButton';
 
-const ButtonList = () => {
+interface Props {
+  dataType: 'modify' | 'create';
+}
+const ButtonList = ({ dataType }: Props) => {
   return (
     <div className="flex gap-x-4 mb-4">
-      <button className="flex normal-button text-[rgba(0,0,0,0.4)] ">
-        <span>
-          생성 <span>20</span>
-        </span>
-      </button>
-      <button className="normal-button text-[rgba(0,0,0,0.4)]">
-        <span>
-          수정 <span>3</span>
-        </span>
-      </button>
+      <TypeButton type="create" total={20} dataType={dataType} />
+      <TypeButton type="modify" total={3} dataType={dataType} />
     </div>
   );
 };
