@@ -5,12 +5,17 @@ interface Props {
 }
 const ProjectItemList = ({ list }: Props) => {
   const data = use(list);
-  console.log(data);
   return (
     <>
-      {data.map((item, idx) => (
-        <ProjectItem {...item} key={idx} />
-      ))}
+      {data.length ? (
+        data.map((item, idx) => <ProjectItem {...item} key={idx} />)
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <span className="text-xl font-bold">
+            좌측 상단의 데이터 타입을 선택해 주세요.
+          </span>
+        </div>
+      )}
     </>
   );
 };
