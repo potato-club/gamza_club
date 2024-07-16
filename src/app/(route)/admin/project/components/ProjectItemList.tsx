@@ -4,11 +4,20 @@ interface Props {
   list: Promise<any[]>;
 }
 const ProjectItemList = ({ list }: Props) => {
+  const projectData = {
+    title: 'HENEIN',
+    describe: '헤네인입니다요.',
+    status: '완료',
+    port: 8080,
+    file: 'donggyun.zip',
+  };
   const data = use(list);
   return (
     <>
       {data.length ? (
-        data.map((item, idx) => <ProjectItem {...item} key={idx} />)
+        data.map((item, idx) => (
+          <ProjectItem {...item} project={projectData} key={idx} />
+        ))
       ) : (
         <div className="flex justify-center items-center h-full">
           <span className="text-xl font-bold">

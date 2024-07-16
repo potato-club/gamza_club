@@ -6,11 +6,20 @@ interface Props {
   name: string;
   email: string;
   major: string;
+  project: Project;
+}
+interface Project {
+  title: string;
+  describe: string;
+  status: string;
+  port: number;
+  file: string;
 }
 const ProjectItem = ({ ...props }: Props) => {
+  console.log(props.project);
   return (
     <div className="flex justify-between items-center border border-stone-200 bg-white w-full h-[70px] px-5 py-3 rounded-xl">
-      {/* 프로젝트 이름, 학과 */}
+      {/* 업로더 이름, 학과 */}
       <div className="flex gap-x-5 h-6">
         <span>{props.id.toString().padStart(4, '0')}</span>
         <span className="flex w-[60px] justify-center">
@@ -21,23 +30,12 @@ const ProjectItem = ({ ...props }: Props) => {
         </span>
       </div>
 
-      {/* 유저 이메일 */}
-      <div className="flex gap-x-2">
-        <div className="flex justify-center items-center border border-stone-200 rounded-full bg-white w-8 h-8">
-          <img
-            src="/character.jpg"
-            width={30}
-            height={30}
-            className="rounded-full"
-          />
-        </div>
-        <div className="w-[380px] text-ellipsis overflow-hidden">
-          <span className="leading-8 ">
-            {props.email || 'rlaehdrbs580@naver.com'}
-            {props.email || 'rlaehdrbs580@naver.com'}
-            {props.email || 'rlaehdrbs580@naver.com'}
-          </span>
-        </div>
+      {/* 프로젝트 정보 */}
+      <div className="w-[380px] text-ellipsis overflow-hidden">
+        <span className="leading-8 ">
+          {props.project.title} / {props.project.status} / {props.project.port}{' '}
+          / {props.project.file} / {props.project.describe}
+        </span>
       </div>
 
       {/* 버튼 */}
