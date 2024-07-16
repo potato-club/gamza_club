@@ -13,6 +13,7 @@ import {
   FormLabel,
 } from '@/app/_components/ui/form';
 import { Input } from '@/app/_components/ui/input';
+import Link from 'next/link';
 
 const FormSchema = z.object({
   id: z.string().min(2, {
@@ -23,7 +24,7 @@ const FormSchema = z.object({
   }),
 });
 
-export default function InputForm() {
+export default function InputForm({ projectId }: { projectId: number }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -85,9 +86,11 @@ export default function InputForm() {
           )}
         />
         <div className="flex justify-between w-full">
-          <Button type="submit" className="normal-button px-6 h-12">
-            재등록
-          </Button>
+          <Link href={`/repost?id=${projectId}`}>
+            <Button type="button" className="normal-button px-6 h-12">
+              재등록
+            </Button>
+          </Link>
           <Button
             type="submit"
             className="normal-button px-6 bg-[#36AE5A] text-white h-12"

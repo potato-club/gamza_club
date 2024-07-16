@@ -32,7 +32,7 @@ const LogModal = ({ ...props }) => {
           />
         </CardContent>
         <CardFooter className="flex justify-between p-0">
-          <InputForm />
+          <InputForm projectId={props.id} />
         </CardFooter>
       </Card>
     </PortalWrapper>
