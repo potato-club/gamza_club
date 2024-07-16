@@ -1,4 +1,5 @@
 import React from 'react';
+import MutateButton from './MutateButton';
 
 interface Props {
   id: number;
@@ -33,12 +34,18 @@ const UserItem = ({ ...props }: Props) => {
 
       {/* 버튼 */}
       <div className="flex gap-x-4">
-        <button className="normal-button text-green-600 hover:shadow-inner">
-          승인
-        </button>
-        <button className="normal-button text-red-400 hover:shadow-inner">
-          삭제
-        </button>
+        <MutateButton
+          value="승인"
+          color="text-green-600"
+          id={props.id}
+          type="user"
+        />
+        <MutateButton
+          value="삭제"
+          color="text-red-400"
+          id={props.id}
+          type="user"
+        />
       </div>
     </div>
   );
