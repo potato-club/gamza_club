@@ -1,19 +1,26 @@
+'use client';
+
 import React from 'react';
+import FormWrapper from '../FormWrapper';
 import First from './First';
 import Second from './Second';
 import Third from './Third';
+import { PostSchema, defaultValue } from '@/app/_utils/validator/post';
 
 const Process = ({ idx }: { idx: number | undefined }) => {
-  switch (idx) {
-    case 1:
-      return <First />;
-    case 2:
-      return <Second />;
-    case 3:
-      return <Third />;
-    default:
-      return <First />;
-  }
+  return (
+    <FormWrapper schema={PostSchema} defaultValue={defaultValue}>
+      {idx === 1 ? (
+        <First />
+      ) : idx === 2 ? (
+        <Second />
+      ) : idx === 3 ? (
+        <Third />
+      ) : (
+        <First />
+      )}
+    </FormWrapper>
+  );
 };
 
 export default Process;
