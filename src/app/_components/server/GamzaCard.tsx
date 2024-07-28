@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/_components/ui/card';
-import { Input } from '@/app/_components/ui/input';
+import { Input, InputProps } from '@/app/_components/ui/input';
 
 interface Props {
   title: string;
@@ -32,14 +32,7 @@ const GamzaCard = ({ title, content }: Props) => {
 
 export default GamzaCard;
 
-interface CardButtonProps {
-  text: string;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  color?: 'green' | 'init';
-}
-
-export const CardButton = ({ text, ...props }: CardButtonProps) => {
+export const CardButton = ({ ...props }) => {
   const colorVariant = {
     init: 'normal-button font-bold',
     green: 'normal-button bg-[#36AE5A] text-white font-bold',
@@ -51,30 +44,31 @@ export const CardButton = ({ text, ...props }: CardButtonProps) => {
       }
       {...props}
     >
-      {text}
+      {props.text}
     </button>
   );
 };
 
-interface CardInputProps {
-  size: 'medium' | 'large';
-  type?: 'text' | 'number' | 'password' | 'file';
-  placeholder?: string;
-  name?: string;
+interface CardInputProps extends InputProps {
+  stringSize: 'medium' | 'large';
 }
-
-export const CardInput = ({ size, ...props }: CardInputProps) => {
-  const sizeVariant = {
-    medium: 'normal-input w-[225px]',
-    large: 'normal-input w-[360px]',
-  };
-  return (
-    <Input
-      id="picture"
-      {...props}
-      className={
-        size === 'medium' ? `${sizeVariant.medium}` : `${sizeVariant.large}`
-      }
-    />
-  );
-};
+export const CardInput = React.forwardRef<HTMLInputElement, CardInputProps>(
+  ({ stringSize, className, type, ...props }, ref) => {
+    const sizeVariant = {
+      medium: 'normal-input w-[225px]',
+      large: 'normal-input w-[360px]',
+    };
+    return (
+      <Input
+        className={
+          stringSize === 'medium'
+            ? `${sizeVariant.medium}`
+            : `${sizeVariant.large}`
+        }
+        {...props}
+        ref={ref}
+        type={type}
+      />
+    );
+  }
+);
