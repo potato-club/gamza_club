@@ -24,10 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>
-        <div className="min-h-screen flex justify-center items-center">
-          {children}
-        </div>
+      <body className={pretendard.className} suppressHydrationWarning={true}>
+        {children}
       </body>
     </html>
   );
