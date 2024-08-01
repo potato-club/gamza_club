@@ -1,37 +1,37 @@
-import React, { ChangeEvent } from "react";
-import { Button } from "@/app/_components/ui/button";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@/app/_components/ui/button";
 
-type SecondCardProps = {
+interface FormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  lastName: string;
+  firstName: string;
+  department: string;
+  studentID: string;
+}
+
+interface SecondCardProps {
   setStep: (step: "First" | "Second" | "Third") => void;
-  formData: {
-    email: string;
-    password: string;
-    confirmPassword: string;
-    lastName: string;
-    firstName: string;
-    department: string;
-    studentID: string;
-  };
-  setFormData: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      password: string;
-      confirmPassword: string;
-      lastName: string;
-      firstName: string;
-      department: string;
-      studentID: string;
-    }>
-  >;
-};
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  formData: FormData;
+}
 
 const SecondCard: React.FC<SecondCardProps> = ({
   setStep,
-  formData,
   setFormData,
+  formData,
 }) => {
-  const handleNext = () => {
+  const { register, handleSubmit, setValue } = useForm<FormData>({
+    defaultValues: formData,
+  });
+
+  const onSubmit = (data: FormData) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
     setStep("Third");
   };
 
@@ -39,45 +39,34 @@ const SecondCard: React.FC<SecondCardProps> = ({
     setStep("First");
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const inputStyle =
     "w-[350px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500";
 
   return (
-    <div className="flex flex-col gap-[32px]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-[32px]"
+    >
       <div className="flex flex-col gap-[21px]">
         <input
-          name="email"
-          key="email"
+          {...register("email")}
           placeholder="이메일"
           className={`${inputStyle} mt-[70px]`}
-          value={formData.email}
-          onChange={handleChange}
+          defaultValue={formData.email}
         />
         <input
-          name="password"
-          key="password"
+          {...register("password")}
           type="password"
           placeholder="비밀번호"
           className={inputStyle}
-          value={formData.password}
-          onChange={handleChange}
+          defaultValue={formData.password}
         />
         <input
-          name="confirmPassword"
-          key="confirmPassword"
+          {...register("confirmPassword")}
           type="password"
           placeholder="비밀번호 확인"
           className={inputStyle}
-          value={formData.confirmPassword}
-          onChange={handleChange}
+          defaultValue={formData.confirmPassword}
         />
       </div>
       <div className="flex items-center justify-end gap-[10px]">
@@ -89,14 +78,14 @@ const SecondCard: React.FC<SecondCardProps> = ({
           이전
         </Button>
         <Button
+          type="submit"
           size="signup"
           className="bg-green-500 text-white hover:bg-white hover:text-green-500 hover:border-[2px] hover:border-green-500"
-          onClick={handleNext}
         >
           다음
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 
