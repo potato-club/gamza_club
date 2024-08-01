@@ -7,17 +7,17 @@ interface Prop {
 }
 
 const useSignupState = create<Prop>((set) => ({
-  count: 0,
+  count: 1,
   inc: () =>
     set((state) => {
-      if (state.count < 2) {
+      if (state.count < 3) {
         return { count: state.count + 1 };
       }
       return state;
     }),
   dec: () =>
     set((state) => {
-      if (state.count > 0) {
+      if (state.count > 1) {
         return { count: state.count - 1 };
       }
       return state;
