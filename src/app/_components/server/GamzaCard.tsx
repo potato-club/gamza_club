@@ -29,7 +29,6 @@ const GamzaCard = ({ title, content }: Props) => {
     </Card>
   );
 };
-
 export default GamzaCard;
 
 export const CardButton = ({ ...props }) => {
@@ -72,3 +71,4 @@ export const CardInput = React.forwardRef<HTMLInputElement, CardInputProps>(
     );
   }
 );
+CardInput.displayName = 'CardInput';

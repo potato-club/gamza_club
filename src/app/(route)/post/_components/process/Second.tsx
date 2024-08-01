@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
 import { DateRange } from 'react-day-picker';
-import { ErrorSpan } from '../FormWrapper';
+import { ErrorSpan } from '@/app/_components/client/FormWrapper';
 
 const Second = () => {
   const router = useRouter();

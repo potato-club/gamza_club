@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useFormContext } from 'react-hook-form';
 import { PostSchemaType } from '@/app/_utils/validator/post';
 import { FormControl, FormField, FormItem } from '@/app/_components/ui/form';
-import { ErrorSpan } from '../FormWrapper';
+import { ErrorSpan } from '@/app/_components/client/FormWrapper';
 
 const First = () => {
   const router = useRouter();
