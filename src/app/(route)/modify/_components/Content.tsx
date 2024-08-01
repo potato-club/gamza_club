@@ -10,8 +10,8 @@ const Content = ({ id }: { id: number }) => {
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 items-center pt-7">
-        <CardInput size="large" placeholder="프로젝트 이름" />
-        <CardInput size="large" placeholder="프로젝트 설명" />
+        {/* <CardInput size="large" placeholder="프로젝트 이름" />
+        <CardInput size="large" placeholder="프로젝트 설명" /> */}
       </div>
       <div className="flex flex-col gap-y-6 pb-7">
         <InnerLayout title={'상태'} content={<Radios />} />
