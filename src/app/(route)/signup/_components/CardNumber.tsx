@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFunnel } from "@/app/_hooks/useFunnel";
 import FirstCard from "./FirstCard";
 import SecondCard from "./SecondCard";
@@ -28,8 +28,8 @@ const CardNumber = () => {
     studentID: "",
   });
 
-  const handleSubmit = async () => {
-    console.log(formData);
+  const handleSubmitForm = () => {
+    console.log("Form submitted with data: ", formData);
   };
 
   return (
@@ -41,16 +41,15 @@ const CardNumber = () => {
         <Funnel.Step name="Second">
           <SecondCard
             setStep={setStep}
-            formData={formData}
             setFormData={setFormData}
+            formData={formData}
           />
         </Funnel.Step>
         <Funnel.Step name="Third">
           <ThirdCard
             setStep={setStep}
-            formData={formData}
             setFormData={setFormData}
-            handleSubmit={handleSubmit}
+            handleSubmitForm={handleSubmitForm}
           />
         </Funnel.Step>
       </Funnel>
