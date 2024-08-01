@@ -1,20 +1,15 @@
-import { z, ZodObject } from 'zod';
+import { z } from 'zod';
 import { Form } from '@/app/_components/ui/form';
 import { DefaultValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/app/_components/ui/button';
 
-interface Props<T> {
+interface Props {
   children: React.ReactNode;
   schema: z.AnyZodObject;
-  defaultValue: DefaultValues<T>; // Add defaultValue prop
+  defaultValue: DefaultValues<z.Schema>;
 }
 
-const FormWrapper = <T extends z.Schema>({
-  children,
-  schema,
-  defaultValue,
-}: Props<T>) => {
+const FormWrapper = ({ children, schema, defaultValue }: Props) => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: defaultValue,
@@ -26,12 +21,7 @@ const FormWrapper = <T extends z.Schema>({
   };
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex flex-col gap-y-4"
-      >
-        {children}
-      </form>
+      <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
     </Form>
   );
 };

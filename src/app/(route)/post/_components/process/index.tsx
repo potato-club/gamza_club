@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import FormWrapper from '../FormWrapper';
+import FormWrapper from '@/app/_components/client/FormWrapper';
 import First from './First';
 import Second from './Second';
 import Third from './Third';

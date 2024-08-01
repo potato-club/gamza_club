@@ -11,6 +11,7 @@ import {
 import { useFormContext } from 'react-hook-form';
 import { PostSchemaType } from '@/app/_utils/validator/post';
 import { useRouter } from 'next/navigation';
+import { ErrorSpan } from '@/app/_components/client/FormWrapper';
 
 const Third = () => {
   const router = useRouter();
