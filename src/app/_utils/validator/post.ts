@@ -5,7 +5,10 @@ const ACCEPTED_FILE_TYPES = ['application/zip'];
 
 export const PostSchema = z.object({
   title: z.string().min(2, '프로젝트 이름은 두글자 이상이어야 합니다.'),
-  describe: z.string().max(20, '설명은 20자 이하로 해주세요'),
+  describe: z
+    .string()
+    .min(2, '설명은 두글자 이상 해주세요')
+    .max(20, '설명은 20자 이하로 해주세요'),
   status: z.enum(['plan', 'progress', 'complete'], {
     required_error: '상태 값 한가지는 필수입니다.',
   }),
