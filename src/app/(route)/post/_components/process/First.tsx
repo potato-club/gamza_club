@@ -1,9 +1,13 @@
+import { RHFInput } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
-import { RHFInput } from '@/app/_components/client/RHForm';
 import { useFormContext } from 'react-hook-form';
 
-const First = ({ onNext }: { onNext: () => void }) => {
+interface Props {
+  onNext: (validArr: boolean[]) => void;
+}
+
+const First = ({ onNext }: Props) => {
   const {
     control,
     formState: { errors },
@@ -35,9 +39,7 @@ const First = ({ onNext }: { onNext: () => void }) => {
           onClick={async () => {
             const titleValid = await trigger('title');
             const describeValid = await trigger('describe');
-            if (titleValid && describeValid) {
-              onNext();
-            }
+            onNext([titleValid, describeValid]);
           }}
         />
       </div>

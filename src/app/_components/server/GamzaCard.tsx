@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/_components/ui/card';
-import { Input, InputProps } from '@/app/_components/ui/input';
 
 interface Props {
   title: string;
@@ -47,28 +46,3 @@ export const CardButton = ({ ...props }) => {
     </button>
   );
 };
-
-interface CardInputProps extends InputProps {
-  stringSize: 'medium' | 'large';
-}
-export const CardInput = React.forwardRef<HTMLInputElement, CardInputProps>(
-  ({ stringSize, className, type, ...props }, ref) => {
-    const sizeVariant = {
-      medium: 'normal-input w-[225px]',
-      large: 'normal-input w-[360px]',
-    };
-    return (
-      <Input
-        className={
-          stringSize === 'medium'
-            ? `${sizeVariant.medium}`
-            : `${sizeVariant.large}`
-        }
-        {...props}
-        ref={ref}
-        type={type}
-      />
-    );
-  }
-);
-CardInput.displayName = 'CardInput';

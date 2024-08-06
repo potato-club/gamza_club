@@ -1,15 +1,13 @@
+import { RHFCalendar, RHFRadioGroup } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
-import { RHFCalendar, RHFRadios } from '@/app/_components/client/RHForm';
 import { useFormContext } from 'react-hook-form';
 
-const Second = ({
-  onNext,
-  onPrev,
-}: {
-  onNext: () => void;
+interface Props {
+  onNext: (validArr: boolean[]) => void;
   onPrev: () => void;
-}) => {
+}
+const Second = ({ onNext, onPrev }: Props) => {
   const {
     control,
     formState: { errors },
@@ -19,7 +17,7 @@ const Second = ({
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 py-7">
-        <RHFRadios
+        <RHFRadioGroup
           control={control}
           errors={errors}
           name="status"
@@ -61,9 +59,7 @@ const Second = ({
           onClick={async () => {
             const statusValid = await trigger('status');
             const dateValid = await trigger('date');
-            if (statusValid && dateValid) {
-              onNext();
-            }
+            onNext([statusValid, dateValid]);
           }}
         />
       </div>
