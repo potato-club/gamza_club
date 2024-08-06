@@ -1,13 +1,8 @@
 import { HTMLInputTypeAttribute } from 'react';
-import {
-  Control,
-  DefaultValues,
-  FieldErrors,
-  FieldValues,
-} from 'react-hook-form';
+import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 
-interface RHFInitTypes {
+export interface RHFInitTypes {
   control: Control<FieldValues, any>;
   errors: FieldErrors<FieldValues>;
 }
@@ -15,7 +10,6 @@ interface RHFInitTypes {
 export interface RHFWrapperProps {
   children: React.ReactNode;
   schema: z.AnyZodObject;
-  defaultValue: DefaultValues<z.Schema>;
   submitHandler: (values: FieldValues) => void;
 }
 
@@ -31,6 +25,13 @@ export interface RHFInputProps extends RHFInitTypes {
   size: 'large' | 'medium';
 }
 
+export interface RHFFileInputProps extends RHFInitTypes {
+  name: string;
+  label?: string;
+  placeholder: string;
+  fileName: string;
+}
+
 type RadioItem = {
   value: string;
   id: string;
@@ -38,7 +39,7 @@ type RadioItem = {
   disalbed?: boolean;
   checked?: boolean;
 };
-export interface RHFRadiosProps extends RHFInitTypes {
+export interface RHFRadioGroupProps extends RHFInitTypes {
   name: string;
   label: string;
   itemList: RadioItem[];
