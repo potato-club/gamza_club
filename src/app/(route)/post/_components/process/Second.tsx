@@ -4,10 +4,9 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface Props {
-  onNext: (validArr: boolean[]) => void;
   onPrev: () => void;
 }
-const Second = ({ onNext, onPrev }: Props) => {
+const Second = ({ onPrev }: Props) => {
   const {
     control,
     formState: { errors },
@@ -53,15 +52,7 @@ const Second = ({ onNext, onPrev }: Props) => {
       </div>
       <div className="flex justify-end gap-x-3">
         <CardButton text="이전" onClick={() => onPrev()} />
-        <CardButton
-          text="다음"
-          color="green"
-          onClick={async () => {
-            const statusValid = await trigger('status');
-            const dateValid = await trigger('date');
-            onNext([statusValid, dateValid]);
-          }}
-        />
+        <CardButton text="다음" color="green" />
       </div>
     </div>
   );

@@ -30,7 +30,14 @@ const GamzaCard = ({ title, content }: Props) => {
 };
 export default GamzaCard;
 
-export const CardButton = ({ ...props }) => {
+interface CardButtonProps {
+  color?: 'green';
+  text: string;
+  type?: 'submit' | 'button' | 'reset';
+  onClick?: () => void;
+  onSubmit?: () => void;
+}
+export const CardButton = ({ ...props }: CardButtonProps) => {
   const colorVariant = {
     init: 'normal-button font-bold',
     green: 'normal-button bg-[#36AE5A] text-white font-bold',

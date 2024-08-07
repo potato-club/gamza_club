@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -6,8 +5,6 @@ import {
   FormItem,
   FormLabel,
 } from '@/app/_components/ui/form';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   RHFWrapperProps,
   RHFInputProps,
@@ -28,26 +25,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
-import { getDefaultsFromSchema } from '@/app/_utils/getDefaultsFromSchema';
 import { FileInput, NormalInput } from './ui';
 
-export const RHFWrapper = ({
-  children,
-  schema,
-  submitHandler,
-}: RHFWrapperProps) => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-    defaultValues: getDefaultsFromSchema(schema),
-  });
-
-  const onSubmit = (values: z.infer<typeof schema>) => {
-    submitHandler(values);
-  };
-
+export const RHFWrapper = ({ children, form, onSubmit }: RHFWrapperProps) => {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={onSubmit}>{children}</form>
     </Form>
   );
 };
@@ -64,6 +47,7 @@ export const RHFInput = ({
   type,
   control,
   errors,
+  value,
 }: RHFInputProps) => {
   return (
     <FormField
@@ -85,6 +69,7 @@ export const RHFInput = ({
                   stringSize={size}
                   type={type}
                   placeholder={placeholder}
+                  value={value}
                 />
               </FormControl>
             </FormItem>

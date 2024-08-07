@@ -4,16 +4,17 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface Props {
-  onNext: (validArr: boolean[]) => void;
+  onNext: () => void;
 }
 
-const First = ({ onNext }: Props) => {
+const First = ({ formData }: { formData: any }) => {
   const {
     control,
     formState: { errors },
     trigger,
   } = useFormContext();
 
+  console.log(formData.title);
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-5 p-7 items-center">
@@ -33,15 +34,7 @@ const First = ({ onNext }: Props) => {
         />
       </div>
       <div className="flex justify-end gap-x-3">
-        <CardButton
-          text="다음"
-          color="green"
-          onClick={async () => {
-            const titleValid = await trigger('title');
-            const describeValid = await trigger('describe');
-            onNext([titleValid, describeValid]);
-          }}
-        />
+        <CardButton text="다음" color="green" />
       </div>
     </div>
   );

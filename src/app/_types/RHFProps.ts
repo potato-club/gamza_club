@@ -1,6 +1,10 @@
 import { HTMLInputTypeAttribute } from 'react';
-import { Control, FieldErrors, FieldValues } from 'react-hook-form';
-import { z } from 'zod';
+import {
+  Control,
+  FieldErrors,
+  FieldValues,
+  UseFormReturn,
+} from 'react-hook-form';
 
 export interface RHFInitTypes {
   control: Control<FieldValues, any>;
@@ -9,8 +13,8 @@ export interface RHFInitTypes {
 
 export interface RHFWrapperProps {
   children: React.ReactNode;
-  schema: z.AnyZodObject;
-  submitHandler: (values: FieldValues) => void;
+  form: UseFormReturn;
+  onSubmit: () => void;
 }
 
 export interface RHFErrorSpanProps {
@@ -23,6 +27,7 @@ export interface RHFInputProps extends RHFInitTypes {
   placeholder: string;
   type?: HTMLInputTypeAttribute;
   size: 'large' | 'medium';
+  value?: any;
 }
 
 export interface RHFFileInputProps extends RHFInitTypes {
