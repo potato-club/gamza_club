@@ -1,24 +1,12 @@
 import { RHFCalendar, RHFRadioGroup } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
 
-interface Props {
-  onPrev: () => void;
-}
-const Second = ({ onPrev }: Props) => {
-  const {
-    control,
-    formState: { errors },
-    trigger,
-  } = useFormContext();
-
+const Second = () => {
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 py-7">
         <RHFRadioGroup
-          control={control}
-          errors={errors}
           name="status"
           label="상태"
           itemList={[
@@ -42,17 +30,11 @@ const Second = ({ onPrev }: Props) => {
             },
           ]}
         />
-        <RHFCalendar
-          control={control}
-          errors={errors}
-          name="date"
-          label="프로젝트 기간"
-          id="date"
-        />
+        <RHFCalendar name="date" label="프로젝트 기간" id="date" />
       </div>
       <div className="flex justify-end gap-x-3">
-        <CardButton text="이전" onClick={() => onPrev()} />
-        <CardButton text="다음" color="green" />
+        <CardButton text="이전" value="prev" />
+        <CardButton text="다음" color="green" value="next" />
       </div>
     </div>
   );

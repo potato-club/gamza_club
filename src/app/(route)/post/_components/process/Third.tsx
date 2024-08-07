@@ -3,7 +3,7 @@ import React from 'react';
 import { RHFFileInput, RHFInput } from '@/app/_components/client/RHF';
 import { useFormContext } from 'react-hook-form';
 
-const Third = ({ onPrev }: { onPrev: () => void }) => {
+const Third = () => {
   const {
     control,
     formState: { errors },
@@ -14,16 +14,12 @@ const Third = ({ onPrev }: { onPrev: () => void }) => {
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 items-center p-7">
         <RHFFileInput
-          control={control}
-          errors={errors}
           name="file"
           placeholder="업로드"
           label="애플리케이션 업로드"
           fileName={getValues().file && getValues().file.name}
         />
         <RHFInput
-          control={control}
-          errors={errors}
           name="port"
           size="medium"
           placeholder="포트 번호"
@@ -31,8 +27,8 @@ const Third = ({ onPrev }: { onPrev: () => void }) => {
         />
       </div>
       <div className="flex justify-end gap-x-3">
-        <CardButton text="이전" onClick={() => onPrev()} />
-        <CardButton type="submit" text="제출" color="green" />
+        <CardButton text="이전" value="prev" />
+        <CardButton type="submit" text="제출" color="green" value="submit" />
       </div>
     </div>
   );

@@ -36,6 +36,7 @@ interface CardButtonProps {
   type?: 'submit' | 'button' | 'reset';
   onClick?: () => void;
   onSubmit?: () => void;
+  value?: 'prev' | 'next' | 'submit';
 }
 export const CardButton = ({ ...props }: CardButtonProps) => {
   const colorVariant = {

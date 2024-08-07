@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute } from 'react';
+import { FormEventHandler, HTMLInputTypeAttribute } from 'react';
 import {
   Control,
   FieldErrors,
@@ -14,27 +14,25 @@ export interface RHFInitTypes {
 export interface RHFWrapperProps {
   children: React.ReactNode;
   form: UseFormReturn;
-  onSubmit: () => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 export interface RHFErrorSpanProps {
   message: any;
 }
 
-export interface RHFInputProps extends RHFInitTypes {
+export interface RHFInputProps {
   name: string;
   label?: string;
   placeholder: string;
   type?: HTMLInputTypeAttribute;
   size: 'large' | 'medium';
-  value?: any;
 }
 
-export interface RHFFileInputProps extends RHFInitTypes {
+export interface RHFFileInputProps {
   name: string;
   label?: string;
   placeholder: string;
-  fileName: string;
 }
 
 type RadioItem = {
@@ -44,7 +42,7 @@ type RadioItem = {
   disalbed?: boolean;
   checked?: boolean;
 };
-export interface RHFRadioGroupProps extends RHFInitTypes {
+export interface RHFRadioGroupProps {
   name: string;
   label: string;
   itemList: RadioItem[];
@@ -52,7 +50,7 @@ export interface RHFRadioGroupProps extends RHFInitTypes {
   type?: HTMLInputTypeAttribute;
 }
 
-export interface RHFCalendarProps extends RHFInitTypes {
+export interface RHFCalendarProps {
   name: string;
   label: string;
   id: string;

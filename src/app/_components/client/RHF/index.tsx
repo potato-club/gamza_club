@@ -26,6 +26,7 @@ import {
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
+import { useFormContext } from 'react-hook-form';
 
 export const RHFWrapper = ({ children, form, onSubmit }: RHFWrapperProps) => {
   return (
@@ -45,10 +46,13 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
-  control,
-  errors,
-  value,
 }: RHFInputProps) => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -69,7 +73,7 @@ export const RHFInput = ({
                   stringSize={size}
                   type={type}
                   placeholder={placeholder}
-                  value={value}
+                  value={watch(name)}
                 />
               </FormControl>
             </FormItem>
@@ -81,6 +85,7 @@ export const RHFInput = ({
                   stringSize={size}
                   type={type}
                   placeholder={placeholder}
+                  value={watch(name)}
                 />
               </FormControl>
             </FormItem>
@@ -95,10 +100,13 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
-  control,
-  errors,
-  fileName,
 }: RHFFileInputProps) => {
+  const {
+    control,
+    formState: { errors },
+    getValues,
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -117,7 +125,7 @@ export const RHFFileInput = ({
                 <FileInput
                   accept="application/zip"
                   field={field}
-                  fileName={fileName}
+                  fileName={getValues().file && getValues().file.name}
                 />
               </FormControl>
             </FormItem>
@@ -128,7 +136,7 @@ export const RHFFileInput = ({
                   accept="application/zip"
                   field={field}
                   placeholder={placeholder}
-                  fileName={fileName}
+                  fileName={getValues().file && getValues().file.name}
                 />
               </FormControl>
             </FormItem>
@@ -143,9 +151,13 @@ export const RHFRadioGroup = ({
   name,
   label,
   itemList,
-  control,
-  errors,
 }: RHFRadioGroupProps) => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -185,13 +197,12 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({
-  name,
-  label,
-  id,
-  control,
-  errors,
-}: RHFCalendarProps) => {
+export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <FormField
       control={control}

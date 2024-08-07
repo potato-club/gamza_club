@@ -12,7 +12,6 @@ const NormalInput = forwardRef<HTMLInputElement, CardInputProps>(
       large: 'normal-input w-[360px]',
     };
 
-    console.log(value);
     return (
       <Input
         className={
@@ -23,6 +22,7 @@ const NormalInput = forwardRef<HTMLInputElement, CardInputProps>(
         {...props}
         ref={ref}
         type={type}
+        value={value}
       />
     );
   }

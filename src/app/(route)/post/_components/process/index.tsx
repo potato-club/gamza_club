@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useFunnel } from '@/app/_hooks/useFunnel';
+import React from 'react';
 import First from './First';
 import Second from './Second';
 import Third from './Third';
@@ -9,11 +8,10 @@ import { PostSchema } from '@/app/_utils/validator/post2';
 import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
 
 const Process = () => {
-  const { FormFunnel, setStep, formData } = useFormFunnel<
-    'First' | 'Second' | 'Third'
-  >('First');
+  const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
+    'First'
+  );
 
-  console.log('내가지정한 form : ', formData);
   return (
     <FormFunnel>
       <FormFunnel.Step
@@ -21,19 +19,27 @@ const Process = () => {
         schema={PostSchema.first}
         onNext={() => setStep('Second')}
       >
-        <First formData={formData} />
+        <First />
       </FormFunnel.Step>
 
       <FormFunnel.Step
         name="Second"
         schema={PostSchema.second}
-        onNext={() => setStep('Second')}
+        onNext={() => setStep('Third')}
+        onPrev={() => setStep('First')}
       >
-        <Second onPrev={() => setStep('First')} />
+        <Second />
       </FormFunnel.Step>
 
-      <FormFunnel.Step name="Third" schema={PostSchema.third} onNext={() => {}}>
-        <Third onPrev={() => setStep('Second')} />
+      <FormFunnel.Step
+        name="Third"
+        schema={PostSchema.third}
+        onSubmit={(data) => {
+          console.log('submit!! : ', data);
+        }}
+        onPrev={() => setStep('Second')}
+      >
+        <Third />
       </FormFunnel.Step>
     </FormFunnel>
   );
