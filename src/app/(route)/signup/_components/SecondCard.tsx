@@ -1,17 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/_components/ui/button";
-
-interface FormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  lastName: string;
-  firstName: string;
-  department: string;
-  studentID: string;
-}
-
+import { FormData } from "./formData";
 interface SecondCardProps {
   setStep: (step: "First" | "Second" | "Third") => void;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
@@ -43,10 +33,7 @@ const SecondCard: React.FC<SecondCardProps> = ({
     "w-[350px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500";
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-[32px]"
-    >
+    <div className="flex flex-col gap-[32px]">
       <div className="flex flex-col gap-[21px]">
         <input
           {...register("email")}
@@ -81,11 +68,12 @@ const SecondCard: React.FC<SecondCardProps> = ({
           type="submit"
           size="signup"
           className="bg-green-500 text-white hover:bg-white hover:text-green-500 hover:border-[2px] hover:border-green-500"
+          onClick={handleSubmit(onSubmit)}
         >
           다음
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 

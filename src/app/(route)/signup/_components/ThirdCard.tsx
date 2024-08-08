@@ -1,16 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/app/_components/ui/button";
-
-interface FormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  lastName: string;
-  firstName: string;
-  department: string;
-  studentID: string;
-}
+import { FormData } from "./formData";
 
 interface ThirdCardProps {
   setStep: (step: "First" | "Second" | "Third") => void;
@@ -41,10 +32,7 @@ const ThirdCard: React.FC<ThirdCardProps> = ({
     "w-[350px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500";
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-[32px]"
-    >
+    <div onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[32px]">
       <div className="flex flex-col gap-[21px]">
         <div className="flex mt-[70px] gap-[30px]">
           <input
@@ -85,7 +73,7 @@ const ThirdCard: React.FC<ThirdCardProps> = ({
           가입
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 

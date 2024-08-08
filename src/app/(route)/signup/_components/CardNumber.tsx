@@ -5,7 +5,7 @@ import FirstCard from "./FirstCard";
 import SecondCard from "./SecondCard";
 import ThirdCard from "./ThirdCard";
 
-type FormData = {
+interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
@@ -13,7 +13,7 @@ type FormData = {
   firstName: string;
   department: string;
   studentID: string;
-};
+}
 
 const CardNumber = () => {
   const { Funnel, setStep } = useFunnel<"First" | "Second" | "Third">("First");
