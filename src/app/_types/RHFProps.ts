@@ -1,34 +1,38 @@
-import { HTMLInputTypeAttribute } from 'react';
+import { FormEventHandler, HTMLInputTypeAttribute } from 'react';
 import {
   Control,
-  DefaultValues,
   FieldErrors,
   FieldValues,
+  UseFormReturn,
 } from 'react-hook-form';
-import { z } from 'zod';
 
-interface RHFInitTypes {
+export interface RHFInitTypes {
   control: Control<FieldValues, any>;
   errors: FieldErrors<FieldValues>;
 }
 
 export interface RHFWrapperProps {
   children: React.ReactNode;
-  schema: z.AnyZodObject;
-  defaultValue: DefaultValues<z.Schema>;
-  submitHandler: (values: FieldValues) => void;
+  form: UseFormReturn;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 export interface RHFErrorSpanProps {
   message: any;
 }
 
-export interface RHFInputProps extends RHFInitTypes {
+export interface RHFInputProps {
   name: string;
   label?: string;
   placeholder: string;
   type?: HTMLInputTypeAttribute;
   size: 'large' | 'medium';
+}
+
+export interface RHFFileInputProps {
+  name: string;
+  label?: string;
+  placeholder: string;
 }
 
 type RadioItem = {
@@ -38,7 +42,7 @@ type RadioItem = {
   disalbed?: boolean;
   checked?: boolean;
 };
-export interface RHFRadiosProps extends RHFInitTypes {
+export interface RHFRadioGroupProps {
   name: string;
   label: string;
   itemList: RadioItem[];
@@ -46,7 +50,7 @@ export interface RHFRadiosProps extends RHFInitTypes {
   type?: HTMLInputTypeAttribute;
 }
 
-export interface RHFCalendarProps extends RHFInitTypes {
+export interface RHFCalendarProps {
   name: string;
   label: string;
   id: string;
