@@ -1,21 +1,17 @@
-import { z } from 'zod';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/app/_components/ui/form';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormContext } from 'react-hook-form';
 import {
   RHFWrapperProps,
   RHFInputProps,
   RHFErrorSpanProps,
-  RHFRadiosProps,
+  RHFRadioGroupProps,
   RHFCalendarProps,
+  RHFFileInputProps,
 } from '@/app/_types/RHFProps';
 import { Label } from '@/app/_components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
@@ -29,28 +25,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
-import { CardInput } from '../server/GamzaCard';
+import { FileInput, NormalInput } from './ui';
+import { useFormContext } from 'react-hook-form';
 
-export const RHFWrapper = ({
-  children,
-  schema,
-  defaultValue,
-  submitHandler,
-}: RHFWrapperProps) => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-    defaultValues: defaultValue,
-  });
-
-  const onSubmit = (values: z.infer<typeof schema>) => {
-    submitHandler(values);
-  };
-
-  console.log(form.watch());
-
+export const RHFWrapper = ({ children, form, onSubmit }: RHFWrapperProps) => {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={onSubmit}>{children}</form>
     </Form>
   );
 };
@@ -65,9 +46,13 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
-  control,
-  errors,
 }: RHFInputProps) => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -83,45 +68,25 @@ export const RHFInput = ({
                 {label}
               </FormLabel>
               <FormControl>
-                {type === 'file' ? (
-                  <CardInput
-                    stringSize={size}
-                    type={type}
-                    placeholder={placeholder}
-                    onChange={(e) => {
-                      if (e.target.files) field.onChange(e.target.files[0]);
-                    }}
-                  />
-                ) : (
-                  <CardInput
-                    {...field}
-                    stringSize={size}
-                    type={type}
-                    placeholder={placeholder}
-                  />
-                )}
+                <NormalInput
+                  {...field}
+                  stringSize={size}
+                  type={type}
+                  placeholder={placeholder}
+                  value={watch(name)}
+                />
               </FormControl>
             </FormItem>
           ) : (
             <FormItem className="flex flex-row items-center w-full justify-between">
               <FormControl>
-                {type === 'file' ? (
-                  <CardInput
-                    stringSize={size}
-                    type={type}
-                    placeholder={placeholder}
-                    onChange={(e) => {
-                      if (e.target.files) field.onChange(e.target.files[0]);
-                    }}
-                  />
-                ) : (
-                  <CardInput
-                    {...field}
-                    stringSize={size}
-                    type={type}
-                    placeholder={placeholder}
-                  />
-                )}
+                <NormalInput
+                  {...field}
+                  stringSize={size}
+                  type={type}
+                  placeholder={placeholder}
+                  value={watch(name)}
+                />
               </FormControl>
             </FormItem>
           )}
@@ -131,13 +96,68 @@ export const RHFInput = ({
   );
 };
 
-export const RHFRadios = ({
+export const RHFFileInput = ({
+  name,
+  label,
+  placeholder,
+}: RHFFileInputProps) => {
+  const {
+    control,
+    formState: { errors },
+    getValues,
+  } = useFormContext();
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <div className="flex flex-col">
+          {errors[name]?.message && (
+            <RHFErrorSpan message={errors[name]?.message} />
+          )}
+          {label ? (
+            <FormItem className="flex gap-x-10 items-center w-full justify-center">
+              <FormLabel className="w-[88px] font-normal text-[rgba(0,0,0,0.6)] text-sm">
+                {label}
+              </FormLabel>
+              <FormControl>
+                <FileInput
+                  accept="application/zip"
+                  field={field}
+                  fileName={getValues().file && getValues().file.name}
+                />
+              </FormControl>
+            </FormItem>
+          ) : (
+            <FormItem className="flex flex-row items-center w-full justify-between">
+              <FormControl>
+                <FileInput
+                  accept="application/zip"
+                  field={field}
+                  placeholder={placeholder}
+                  fileName={getValues().file && getValues().file.name}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        </div>
+      )}
+    />
+  );
+};
+
+export const RHFRadioGroup = ({
   name,
   label,
   itemList,
-  control,
-  errors,
-}: RHFRadiosProps) => {
+}: RHFRadioGroupProps) => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
@@ -177,13 +197,12 @@ export const RHFRadios = ({
   );
 };
 
-export const RHFCalendar = ({
-  name,
-  label,
-  id,
-  control,
-  errors,
-}: RHFCalendarProps) => {
+export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <FormField
       control={control}
