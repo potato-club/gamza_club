@@ -1,5 +1,4 @@
 import React from "react";
-import NextButton from "./NextButton";
 import CardNumber from "./CardNumber";
 import Number from "./Number";
 const MainCard = () => {
