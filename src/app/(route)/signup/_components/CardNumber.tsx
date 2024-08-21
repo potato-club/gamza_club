@@ -1,59 +1,43 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useFunnel } from "@/app/_hooks/useFunnel";
+import React, { useState } from "react";
 import FirstCard from "./FirstCard";
 import SecondCard from "./SecondCard";
 import ThirdCard from "./ThirdCard";
-
-interface FormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  lastName: string;
-  firstName: string;
-  department: string;
-  studentID: string;
-}
+import { useFormFunnel } from "@/app/_hooks/useFormFunnel";
+import { SignUpSchema } from "@/app/_utils/validator/signup";
 
 const CardNumber = () => {
-  const { Funnel, setStep } = useFunnel<"First" | "Second" | "Third">("First");
-
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    lastName: "",
-    firstName: "",
-    department: "",
-    studentID: "",
-  });
-
-  const handleSubmitForm = () => {
-    console.log("Form submitted with data: ", formData);
-  };
-
+  const { FormFunnel, setStep } = useFormFunnel<"First" | "Second" | "Third">(
+    "First"
+  );
   return (
-    <div>
-      <Funnel>
-        <Funnel.Step name="First">
-          <FirstCard setStep={setStep} />
-        </Funnel.Step>
-        <Funnel.Step name="Second">
-          <SecondCard
-            setStep={setStep}
-            setFormData={setFormData}
-            formData={formData}
-          />
-        </Funnel.Step>
-        <Funnel.Step name="Third">
-          <ThirdCard
-            setStep={setStep}
-            setFormData={setFormData}
-            handleSubmitForm={handleSubmitForm}
-          />
-        </Funnel.Step>
-      </Funnel>
-    </div>
+    <FormFunnel>
+      <FormFunnel.Step
+        name="First"
+        schema={SignUpSchema.first}
+        onNext={() => setStep("Second")}
+      >
+        <FirstCard />
+      </FormFunnel.Step>
+      <FormFunnel.Step
+        name="Second"
+        schema={SignUpSchema.second}
+        onNext={() => setStep("Third")}
+        onPrev={() => setStep("First")}
+      >
+        <SecondCard />
+      </FormFunnel.Step>
+      <FormFunnel.Step
+        name="Third"
+        schema={SignUpSchema.third}
+        onPrev={() => setStep("Second")}
+        onSubmit={(data) => {
+          console.log("submit!! : ", data);
+        }}
+      >
+        <ThirdCard />
+      </FormFunnel.Step>
+    </FormFunnel>
   );
 };
 
