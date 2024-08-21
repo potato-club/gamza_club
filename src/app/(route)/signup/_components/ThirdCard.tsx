@@ -1,77 +1,24 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { Button } from "@/app/_components/ui/button";
-import { FormData } from "./formData";
+import { RHFInput } from "@/app/_components/client/RHF";
+import { CardButton } from "@/app/_components/server/GamzaCard";
 
-interface ThirdCardProps {
-  setStep: (step: "First" | "Second" | "Third") => void;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-  handleSubmitForm: () => void;
-}
-
-const ThirdCard: React.FC<ThirdCardProps> = ({
-  setStep,
-  setFormData,
-  handleSubmitForm,
-}) => {
-  const { register, handleSubmit } = useForm<FormData>();
-
-  const onSubmit = async (data: FormData) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      ...data,
-    }));
-    handleSubmitForm();
-  };
-
-  const handlePrev = () => {
-    setStep("Second");
-  };
-
+const ThirdCard = () => {
   const inputStyle =
     "w-[350px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500";
 
   return (
-    <div onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[32px]">
+    <div className="flex flex-col gap-[32px]">
       <div className="flex flex-col gap-[21px]">
         <div className="flex mt-[70px] gap-[30px]">
-          <input
-            {...register("lastName")}
-            placeholder="성"
-            className="w-[160px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500"
-          />
-          <input
-            {...register("firstName")}
-            placeholder="이름"
-            className="w-[160px] h-[45px] rounded-xl border px-[16px] py-[12px] leading-none text-gray-500"
-          />
+          <RHFInput name="firstName" size="small" placeholder="성" />
+          <RHFInput name="lastName" size="small" placeholder="이름" />
         </div>
-        <input
-          {...register("department")}
-          placeholder="학과"
-          className={inputStyle}
-        />
-        <input
-          {...register("studentID")}
-          placeholder="학번"
-          className={inputStyle}
-        />
+        <RHFInput name="major" size="large" placeholder="학과" />
+        <RHFInput name="studentNumber" size="large" placeholder="학번" />
       </div>
       <div className="flex items-center justify-end gap-[10px]">
-        <Button
-          size="signup"
-          className="text-black border-[2px] border-gray-300 hover:bg-white hover:text-green-500 hover:border-[2px] hover:border-green-500"
-          onClick={handlePrev}
-        >
-          이전
-        </Button>
-        <Button
-          type="submit"
-          size="signup"
-          className="bg-green-500 text-white hover:bg-white hover:text-green-500 hover:border-[2px] hover:border-green-500"
-        >
-          가입
-        </Button>
+        <CardButton text="이전" value="prev" />
+        <CardButton text="가입" color="green" value="submit" />
       </div>
     </div>
   );
