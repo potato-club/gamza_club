@@ -28,10 +28,17 @@ import {
 import { FileInput, NormalInput } from './ui';
 import { useFormContext } from 'react-hook-form';
 
-export const RHFWrapper = ({ children, form, onSubmit }: RHFWrapperProps) => {
+export const RHFWrapper = ({
+  children,
+  form,
+  onSubmit,
+  onClick,
+}: RHFWrapperProps) => {
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit}>{children}</form>
+      <form onSubmit={onSubmit} onClick={onClick}>
+        {children}
+      </form>
     </Form>
   );
 };

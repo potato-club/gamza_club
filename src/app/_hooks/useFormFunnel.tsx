@@ -58,10 +58,20 @@ export function useFormFunnel<T>(initialStep: T): UseFormFunnelReturn<T> {
           }
 
           if (value === 'next' && props.onNext) props.onNext();
-          else if (value === 'prev' && props.onPrev) props.onPrev();
           else if (value === 'submit' && props.onSubmit)
             props.onSubmit({ ...formData, ...result.data });
         })}
+        onClick={(e) => {
+          const target = e.nativeEvent.target as HTMLFormElement;
+          const value = target.value;
+          if (value === 'prev' && props.onPrev) {
+            setFormData((prev: any) => ({
+              ...prev,
+              ...form.getValues(),
+            }));
+            props.onPrev();
+          }
+        }}
       >
         {children}
       </RHFWrapper>
