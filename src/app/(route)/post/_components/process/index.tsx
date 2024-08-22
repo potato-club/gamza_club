@@ -1,25 +1,47 @@
 'use client';
 
 import React from 'react';
-import FormWrapper from '@/app/_components/client/FormWrapper';
 import First from './First';
 import Second from './Second';
 import Third from './Third';
-import { PostSchema, defaultValue } from '@/app/_utils/validator/post';
+import { PostSchema } from '@/app/_utils/validator/post2';
+import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
 
-const Process = ({ idx }: { idx: number | undefined }) => {
+const Process = () => {
+  const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
+    'First'
+  );
+
   return (
-    <FormWrapper schema={PostSchema} defaultValue={defaultValue}>
-      {idx === 1 ? (
+    <FormFunnel>
+      <FormFunnel.Step
+        name="First"
+        schema={PostSchema.first}
+        onNext={() => setStep('Second')}
+      >
         <First />
-      ) : idx === 2 ? (
+      </FormFunnel.Step>
+
+      <FormFunnel.Step
+        name="Second"
+        schema={PostSchema.second}
+        onNext={() => setStep('Third')}
+        onPrev={() => setStep('First')}
+      >
         <Second />
-      ) : idx === 3 ? (
+      </FormFunnel.Step>
+
+      <FormFunnel.Step
+        name="Third"
+        schema={PostSchema.third}
+        onSubmit={(data) => {
+          console.log('submit!! : ', data);
+        }}
+        onPrev={() => setStep('Second')}
+      >
         <Third />
-      ) : (
-        <First />
-      )}
-    </FormWrapper>
+      </FormFunnel.Step>
+    </FormFunnel>
   );
 };
 

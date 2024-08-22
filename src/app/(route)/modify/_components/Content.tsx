@@ -1,39 +1,77 @@
-import DatePicker from '@/app/_components/client/DatePicker';
-import Mutate from '@/app/_components/client/Mutate';
-import { CardButton, CardInput } from '@/app/_components/server/GamzaCard';
-import InnerLayout from '@/app/_components/server/InnerLayout';
+'use client';
+
+import {
+  RHFInput,
+  RHFCalendar,
+  RHFRadioGroup,
+} from '@/app/_components/client/RHF';
+import { CardButton } from '@/app/_components/server/GamzaCard';
 import Link from 'next/link';
 import React from 'react';
-import Radios from '../../post/_components/Radios';
+import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
+import { ModifySchema } from '@/app/_utils/validator/modify';
 
 const Content = ({ id }: { id: number }) => {
+  const { FormFunnel } = useFormFunnel('First');
+
   return (
-    <div className="flex flex-col gap-y-5">
-      <div className="flex flex-col gap-y-6 items-center pt-7">
-        {/* <CardInput size="large" placeholder="프로젝트 이름" />
-        <CardInput size="large" placeholder="프로젝트 설명" /> */}
-      </div>
-      <div className="flex flex-col gap-y-6 pb-7">
-        <InnerLayout title={'상태'} content={<Radios />} />
-        <InnerLayout
-          title={'시작일'}
-          content={<DatePicker placeholder={'시작일 선택'} />}
-        />
-        <InnerLayout
-          title={'종료일'}
-          content={<DatePicker placeholder={'종료일 선택'} />}
-        />
-      </div>
-      <div className="flex justify-end gap-x-3">
-        <Link href={'/'}>
-          <CardButton text="이전" />
-        </Link>
-        <Mutate
-          text="요청"
-          className="normal-button bg-[#36AE5A] text-white font-bold"
-        />
-      </div>
-    </div>
+    <FormFunnel>
+      <FormFunnel.Step
+        name="First"
+        schema={ModifySchema}
+        onSubmit={(data) => {
+          console.log(data);
+        }}
+      >
+        <div className="flex flex-col gap-y-9">
+          <div className="flex flex-col gap-y-6 items-center">
+            <RHFInput name="title" placeholder="프로젝트 이름" size="large" />
+            <RHFInput
+              name="describe"
+              placeholder="프로젝트 설명"
+              size="large"
+            />
+            <RHFRadioGroup
+              name="status"
+              label="상태"
+              itemList={[
+                {
+                  value: 'plan',
+                  id: 'plan',
+                  title: '계획',
+                  disalbed: true,
+                },
+                {
+                  value: 'progress',
+                  id: 'progress',
+                  title: '진행',
+                  disalbed: true,
+                },
+                {
+                  value: 'complete',
+                  id: 'complete',
+                  title: '완료',
+                  checked: true,
+                },
+              ]}
+            />
+            <RHFCalendar name="date" label="개발 기간" id={'modify-date'} />
+          </div>
+
+          <div className="flex justify-end gap-x-3">
+            <Link href={'/'}>
+              <CardButton text="이전" />
+            </Link>
+            <CardButton
+              text="요청"
+              type="submit"
+              value="submit"
+              color="green"
+            />
+          </div>
+        </div>
+      </FormFunnel.Step>
+    </FormFunnel>
   );
 };
 

@@ -7,8 +7,10 @@ import {
   CarouselPrevious,
 } from '@/app/_components/ui/carousel';
 import ProjectItem from './ProjectItem';
+import { List } from '@/app/_types/main';
 
 const Projects = () => {
+  const list: List = React.use(getdata());
   const dummy = [
     {
       id: 1,
@@ -40,6 +42,8 @@ const Projects = () => {
     },
   ];
 
+  console.log(list);
+
   return (
     <Carousel className="w-[750px]">
       <CarouselContent>
@@ -66,3 +70,26 @@ const Projects = () => {
 };
 
 export default Projects;
+
+const getdata = async () => {
+  try {
+    // const res = await fetch(`${process.env.API_URL}`, {
+    //   next: { revalidate: 10 },
+    // });
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 500);
+    });
+
+    // const res = await fetch(`https://koreanjson.com/users`, {
+    //   next: { revalidate: 10 },
+    // });
+    const res = await fetch(`https://koreanjson.com/users`, {
+      cache: 'no-store',
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
