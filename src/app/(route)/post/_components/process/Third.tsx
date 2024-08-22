@@ -1,15 +1,8 @@
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
 import { RHFFileInput, RHFInput } from '@/app/_components/client/RHF';
-import { useFormContext } from 'react-hook-form';
 
 const Third = () => {
-  const {
-    control,
-    formState: { errors },
-    getValues,
-  } = useFormContext();
-
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 items-center p-7">
@@ -17,7 +10,6 @@ const Third = () => {
           name="file"
           placeholder="업로드"
           label="애플리케이션 업로드"
-          fileName={getValues().file && getValues().file.name}
         />
         <RHFInput
           name="port"

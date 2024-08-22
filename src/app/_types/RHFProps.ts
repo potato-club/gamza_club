@@ -15,6 +15,7 @@ export interface RHFWrapperProps {
   children: React.ReactNode;
   form: UseFormReturn;
   onSubmit: FormEventHandler<HTMLFormElement>;
+  onClick: (event: React.MouseEvent<HTMLFormElement>) => void;
 }
 
 export interface RHFErrorSpanProps {
