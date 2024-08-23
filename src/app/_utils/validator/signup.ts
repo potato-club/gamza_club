@@ -29,6 +29,6 @@ export const SignUpSchema = {
     firstName: z.string().default(""),
     lastName: z.string().default(""),
     major: z.string().default(""),
-    studentNumber: z.string(),
+    studentNumber: z.string().default(""),
   }),
 };
