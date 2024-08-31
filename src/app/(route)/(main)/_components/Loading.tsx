@@ -37,12 +37,8 @@ const SkeletonCardUI = () => {
   return (
     <Card className="p-5 flex-col w-[322px] h-[288px] hover:shadow-[inset_0_3px_6px_rgba(0,0,0,0.1)]">
       <CardHeader className="p-0">
-        <CardTitle>
-          <Skeleton className="h-6 w-40 rounded-xl" />
-        </CardTitle>
-        <CardDescription>
-          <Skeleton className="h-6 w-20 rounded-xl" />
-        </CardDescription>
+        <Skeleton className="h-6 w-40 rounded-xl" />
+        <Skeleton className="h-6 w-20 rounded-xl" />
       </CardHeader>
 
       <CardContent className="flex flex-col gap-y-3 p-0">
