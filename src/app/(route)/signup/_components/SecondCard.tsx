@@ -1,5 +1,5 @@
 import React from "react";
-import { RHFInput, RHFSameValueChecker } from "@/app/_components/client/RHF";
+import { RHFInput } from "@/app/_components/client/RHF";
 import { CardButton } from "@/app/_components/server/GamzaCard";
 import { useFormContext, useWatch } from "react-hook-form";
 
