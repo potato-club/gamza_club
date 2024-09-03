@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-const passwordPattern =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^\s;&%=\-+<>'"\\#])[\w~`!@#$^*()_{}[\]:,./?]{8,15}$/;
+const passwordPattern = /^[\w~`!@#$^*()_{}[\]:,./?]{8,15}$/;
 
 export const SignUpSchema = {
   first: z.object({
@@ -14,10 +13,10 @@ export const SignUpSchema = {
     password: z
       .string()
       .min(8, {
-        message: "비밀번호는 영문/숫자/특수문자 조합으로 8~15자리 입니다.",
+        message: "비밀번호는 8자 이상이어야 합니다.",
       })
       .max(15, {
-        message: "비밀번호는 영문/숫자/특수문자 조합으로 8~15자리 입니다.",
+        message: "비밀번호는 15자 이하여야 합니다.",
       })
       .regex(passwordPattern, {
         message: "특수문자 중 ; & % = - + < > ＼ 는 사용할 수 없습니다.",
