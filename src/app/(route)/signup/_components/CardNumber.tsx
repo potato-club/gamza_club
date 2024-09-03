@@ -5,11 +5,33 @@ import SecondCard from "./SecondCard";
 import ThirdCard from "./ThirdCard";
 import { useFormFunnel } from "@/app/_hooks/useFormFunnel";
 import { SignUpSchema } from "@/app/_utils/validator/signup";
-
+import axios from "axios";
 const CardNumber = () => {
   const { FormFunnel, setStep } = useFormFunnel<"First" | "Second" | "Third">(
     "First"
   );
+  const handleSubmit = async (data: any) => {
+    try {
+      const response = await axios.post("http://3.34.207.58:8080/user/signup", {
+        familyName: data.firstName,
+        givenName: data.lastName,
+        email: data.email,
+        password: data.password,
+        major: data.major,
+        studentId: data.studentNumber,
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Failed to sign up:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Error:", error);
+      }
+    }
+  };
+
   return (
     <FormFunnel>
       <FormFunnel.Step
@@ -31,9 +53,7 @@ const CardNumber = () => {
         name="Third"
         schema={SignUpSchema.third}
         onPrev={() => setStep("Second")}
-        onSubmit={(data) => {
-          console.log("submit!! : ", data);
-        }}
+        onSubmit={handleSubmit}
       >
         <ThirdCard />
       </FormFunnel.Step>
