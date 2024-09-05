@@ -10,7 +10,7 @@ const Number = () => {
       <Image src="/Logo.svg" width={48} height={48} alt="" />
       <span className="text-black-500 font-bold text-xl">
         회원가입 <br />
-        {count}페이지
+        페이지
       </span>
     </div>
   );

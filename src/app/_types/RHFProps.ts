@@ -1,10 +1,10 @@
-import { FormEventHandler, HTMLInputTypeAttribute } from 'react';
+import { FormEventHandler, HTMLInputTypeAttribute } from "react";
 import {
   Control,
   FieldErrors,
   FieldValues,
   UseFormReturn,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 export interface RHFInitTypes {
   control: Control<FieldValues, any>;
@@ -27,7 +27,7 @@ export interface RHFInputProps {
   label?: string;
   placeholder: string;
   type?: HTMLInputTypeAttribute;
-  size: 'large' | 'medium';
+  size: "large" | "medium" | "small";
 }
 
 export interface RHFFileInputProps {
@@ -55,4 +55,9 @@ export interface RHFCalendarProps {
   name: string;
   label: string;
   id: string;
+}
+
+export interface RHFCheckBoxProps {
+  name: string;
+  label: string;
 }

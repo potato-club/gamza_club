@@ -1,15 +1,8 @@
 import React from "react";
-import { Checkbox } from "@/app/_components/ui/checkbox";
-import { Button } from "@/app/_components/ui/button";
+import { CardButton } from "@/app/_components/server/GamzaCard";
+import { RHFCheckbox } from "@/app/_components/client/RHF";
 
-type FirstCardProps = {
-  setStep: (step: "First" | "Second" | "Third") => void;
-};
-
-const FirstCard: React.FC<FirstCardProps> = ({ setStep }) => {
-  const handleNext = () => {
-    setStep("Second");
-  };
+const FirstCard = () => {
   return (
     <div className="flex flex-col gap-[32px]">
       <div className="flex flex-col  gap-[32px]">
@@ -22,21 +15,9 @@ const FirstCard: React.FC<FirstCardProps> = ({ setStep }) => {
       </div>
       <div className={` flex items-center justify-between gap-[20px] `}>
         <div className="flex items-center gap-2">
-          <Checkbox id="terms" />
-          <label
-            htmlFor="terms"
-            className=" decoration-green-500 hover:cursor-pointer"
-          >
-            회원가입 약관 동의
-          </label>
+          <RHFCheckbox name="terms" label="회원가입 약관 동의" />
         </div>
-        <Button
-          size="signup"
-          className="bg-green-500 text-white hover:bg-white hover:text-green-500 hover:border-[2px] hover:border-green-500"
-          onClick={handleNext}
-        >
-          다음
-        </Button>
+        <CardButton text="다음" color="green" value="next" />
       </div>
     </div>
   );

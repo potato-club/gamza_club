@@ -1,24 +1,22 @@
-import { Input, InputProps } from '@/app/_components/ui/input';
-import { forwardRef } from 'react';
+import { Input, InputProps } from "@/app/_components/ui/input";
+import { forwardRef } from "react";
 
 interface CardInputProps extends InputProps {
-  stringSize: 'medium' | 'large';
+  stringSize: "small" | "medium" | "large";
   value: any;
 }
+
 const NormalInput = forwardRef<HTMLInputElement, CardInputProps>(
   ({ stringSize, className, type, value, ...props }, ref) => {
     const sizeVariant = {
-      medium: 'normal-input w-[225px]',
-      large: 'normal-input w-[360px]',
+      small: "normal-input w-[165px]",
+      medium: "normal-input w-[225px]",
+      large: "normal-input w-[360px]",
     };
 
     return (
       <Input
-        className={
-          stringSize === 'medium'
-            ? `${sizeVariant.medium}`
-            : `${sizeVariant.large}`
-        }
+        className={`${sizeVariant[stringSize]}`}
         {...props}
         ref={ref}
         type={type}
@@ -27,6 +25,7 @@ const NormalInput = forwardRef<HTMLInputElement, CardInputProps>(
     );
   }
 );
-NormalInput.displayName = 'CardInput';
+
+NormalInput.displayName = "CardInput";
 
 export default NormalInput;
