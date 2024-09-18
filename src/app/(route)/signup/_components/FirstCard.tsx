@@ -13,7 +13,7 @@ const FirstCard = () => {
           <br />갑 김효성 을 김성훈 평생 충성을 다할것을 맹세
         </div>
       </div>
-      <div className={` flex items-center justify-between gap-[20px] `}>
+      <div className="flex items-center justify-between gap-[20px]">
         <div className="flex items-center gap-2">
           <RHFCheckbox name="terms" label="회원가입 약관 동의" />
         </div>
