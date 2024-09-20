@@ -1,15 +1,15 @@
 "use client";
-
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { RHFInput } from "@/app/_components/client/RHF";
 import { CardButton } from "@/app/_components/server/GamzaCard";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
-
+  const router = useRouter();
   const onSubmit = async (data: any) => {
     try {
       const response = await axios.post("http://3.34.207.58:8080/user/login", {
@@ -19,6 +19,7 @@ const Login = () => {
 
       if (response.status === 200) {
         alert("로그인에 성공했습니다!");
+        router.push("/");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
