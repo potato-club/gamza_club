@@ -25,12 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <html lang="en">
-        <body className={pretendard.className} suppressHydrationWarning={true}>
-          {children}
-        </body>
-      </html>
-    </QueryClientProvider>
+    <html lang="en">
+      <body className={pretendard.className} suppressHydrationWarning={true}>
+        {children}
+      </body>
+    </html>
   );
 }
