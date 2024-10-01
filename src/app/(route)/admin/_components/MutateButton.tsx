@@ -1,17 +1,19 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
+import { useAccectUser } from "@/app/_hooks/query/useAccecptUser";
 
 interface Props {
   value: string;
   color: string;
   id: number;
-  type: 'user' | 'project';
+  type: "user" | "project";
 }
 const MutateButton = ({ value, color, id, type }: Props) => {
+  const { mutate } = useAccectUser(id, type, value);
   return (
     <button
       className={`normal-button ${color} hover:shadow-inner`}
-      onClick={() => alert(`${id}번 ${type} ${value} 요청`)}
+      onClick={() => mutate()}
     >
       {value}
     </button>
