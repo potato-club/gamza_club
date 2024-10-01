@@ -9,7 +9,7 @@ interface Props {
   type: "user" | "project";
 }
 const MutateButton = ({ value, color, id, type }: Props) => {
-  const { mutate } = useAccectUser(id, type, value);
+  const { mutate } = useAccectUser(id, type, value); // props로 넘어오는 type으로 project 인지 user 인지 확인후 value 로 승인,거부 결정
   return (
     <button
       className={`normal-button ${color} hover:shadow-inner`}
