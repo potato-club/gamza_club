@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./_styles/globals.css";
 import localFont from "next/font/local";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import QueryProvider from "./QueryProvider";
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
   display: "swap",
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
     icon: "/icon.ico",
   },
 };
-const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -27,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={pretendard.className} suppressHydrationWarning={true}>
-        {children}
+        <QueryProvider> {children}</QueryProvider>
       </body>
     </html>
   );
