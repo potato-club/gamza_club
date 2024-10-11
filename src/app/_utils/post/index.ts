@@ -9,7 +9,6 @@ export const createProject = async ({ ...props }: PostData) => {
   formData.append('description', props.description);
   formData.append('startedDate', props.date.from.toISOString().split('T')[0]);
   formData.append('endedDate', props.date.to.toISOString().split('T')[0]);
-  formData.append('applicationName', props.title);
   formData.append('outerPort', props.port);
   formData.append('tag', 'tag');
   formData.append('variableKey', props.v_key || '');
