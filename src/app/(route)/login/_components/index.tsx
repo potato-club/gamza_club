@@ -5,33 +5,17 @@ import { RHFInput } from "@/app/_components/client/RHF";
 import { CardButton } from "@/app/_components/server/GamzaCard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useLogin } from "@/app/_hooks/query/useLogin";
 
 const Login = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
   const router = useRouter();
-  const onSubmit = async (data: any) => {
-    try {
-      const response = await axios.post("http://3.34.207.58:8080/user/login", {
-        email: data.email,
-        password: data.password,
-      });
 
-      if (response.status === 200) {
-        alert("로그인에 성공했습니다!");
-        router.push("/");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(
-          "Failed to login:",
-          error.response?.data || error.message
-        );
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
-      } else {
-        console.error("Error:", error);
-      }
-    }
+  const { mutate, isError, error } = useLogin();
+
+  const onSubmit = (data: any) => {
+    mutate(data);
   };
 
   return (
