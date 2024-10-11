@@ -17,6 +17,12 @@ const Third = () => {
           placeholder="포트 번호"
           label="내부 포트"
         />
+        <RHFInput
+          name="v_key"
+          size="medium"
+          placeholder="ex) salt 키"
+          label="환경 변수"
+        />
       </div>
       <div className="flex justify-end gap-x-3">
         <CardButton text="이전" value="prev" />
