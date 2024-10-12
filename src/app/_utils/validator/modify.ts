@@ -11,10 +11,10 @@ export const ModifySchema = z.object({
     .max(20, '설명은 20자 이하로 해주세요')
     .default(''),
   status: z
-    .enum(['plan', 'progress', 'complete'], {
+    .enum(['PLAN', 'PROGRESS', 'DONE'], {
       required_error: '상태 값 한가지는 필수입니다.',
     })
-    .default('complete'),
+    .default('DONE'),
   date: z
     .object({
       from: z

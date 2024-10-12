@@ -36,20 +36,20 @@ const Content = ({ id }: { id: number }) => {
               label="상태"
               itemList={[
                 {
-                  value: 'plan',
-                  id: 'plan',
+                  value: 'PLAN',
+                  id: 'PLAN',
                   title: '계획',
                   disalbed: true,
                 },
                 {
-                  value: 'progress',
-                  id: 'progress',
+                  value: 'PROGRESS',
+                  id: 'PROGRESS',
                   title: '진행',
                   disalbed: true,
                 },
                 {
-                  value: 'complete',
-                  id: 'complete',
+                  value: 'DONE',
+                  id: 'DONE',
                   title: '완료',
                   checked: true,
                 },

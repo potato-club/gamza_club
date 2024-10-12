@@ -4,13 +4,15 @@ import React from 'react';
 import First from './First';
 import Second from './Second';
 import Third from './Third';
-import { PostSchema } from '@/app/_utils/validator/post2';
+import { PostSchema } from '@/app/_utils/validator/post';
 import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
+import { usePostForm } from '@/app/_hooks/query/usePost';
 
 const Process = () => {
   const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
     'First'
   );
+  const { mutate } = usePostForm();
 
   return (
     <FormFunnel>
@@ -34,9 +36,17 @@ const Process = () => {
       <FormFunnel.Step
         name="Third"
         schema={PostSchema.third}
-        onSubmit={(data) => {
-          console.log('submit!! : ', data);
-        }}
+        onSubmit={(data) =>
+          mutate({
+            zip: data.file,
+            title: data.title,
+            description: data.describe,
+            status: data.status,
+            date: data.date,
+            port: data.port,
+            v_key: data.v_key,
+          })
+        }
         onPrev={() => setStep('Second')}
       >
         <Third />
