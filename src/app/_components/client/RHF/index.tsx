@@ -4,7 +4,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "@/app/_components/ui/form";
+} from '@/app/_components/ui/form';
 import {
   RHFWrapperProps,
   RHFInputProps,
@@ -13,22 +13,23 @@ import {
   RHFCalendarProps,
   RHFFileInputProps,
   RHFCheckBoxProps,
-} from "@/app/_types/RHFProps";
-import { Label } from "@/app/_components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "@/app/_utils/utils";
-import { Button } from "@/app/_components/ui/button";
-import { Calendar } from "@/app/_components/ui/calendar";
-import { Checkbox } from "../../ui/checkbox";
+} from '@/app/_types/RHFProps';
+import { Label } from '@/app/_components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { cn } from '@/app/_utils/utils';
+import { Button } from '@/app/_components/ui/button';
+import { Calendar } from '@/app/_components/ui/calendar';
+import { Checkbox } from '../../ui/checkbox';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/_components/ui/popover";
-import { FileInput, NormalInput } from "./ui";
-import { useFormContext } from "react-hook-form";
+} from '@/app/_components/ui/popover';
+import { FileInput, NormalInput } from './ui';
+import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
 
 export const RHFWrapper = ({
   children,
@@ -55,12 +56,20 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
+  defaultValue,
 }: RHFInputProps) => {
   const {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -109,12 +118,20 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
+  defaultValue,
 }: RHFFileInputProps) => {
   const {
     control,
     formState: { errors },
     getValues,
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -173,7 +190,7 @@ export const RHFRadioGroup = ({
       name={name}
       render={({ field }) => (
         <div className="flex flex-col gap-y-4">
-          {errors.status?.message && <RHFErrorSpan message={"상태 에러"} />}
+          {errors.status?.message && <RHFErrorSpan message={'상태 에러'} />}
           <FormItem className="flex gap-x-10 items-center w-full justify-center">
             <FormLabel className="w-[88px] font-normal text-[rgba(0,0,0,0.6)] text-sm">
               {label}
@@ -206,11 +223,23 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
+export const RHFCalendar = ({
+  name,
+  label,
+  id,
+  defaultValue,
+}: RHFCalendarProps) => {
   const {
     control,
     formState: { errors },
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -223,28 +252,28 @@ export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
           </FormLabel>
           <div className="flex flex-col">
             {errors.date && (
-              <RHFErrorSpan message={"유효한 기간을 선택해주세요"} />
+              <RHFErrorSpan message={'유효한 기간을 선택해주세요'} />
             )}
             <FormControl>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     id={id}
-                    variant={"outline"}
+                    variant={'outline'}
                     className={cn(
-                      "w-[225px] justify-start text-left font-normal bg-white",
-                      !field.value && "text-muted-foreground"
+                      'w-[225px] justify-start text-left font-normal bg-white',
+                      !field.value && 'text-muted-foreground'
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {field.value?.from ? (
                       field.value.to ? (
                         <>
-                          {format(field.value.from, "yyyy-MM-dd")} -
-                          {format(field.value.to, "yyyy-MM-dd")}
+                          {format(field.value.from, 'yyyy-MM-dd')} -
+                          {format(field.value.to, 'yyyy-MM-dd')}
                         </>
                       ) : (
-                        format(field.value.from, "yyyy-MM-dd")
+                        format(field.value.from, 'yyyy-MM-dd')
                       )
                     ) : (
                       <span>기간 선택</span>

@@ -8,6 +8,7 @@ export const PostSchema = {
     title: z
       .string()
       .min(2, '프로젝트 이름은 두글자 이상이어야 합니다.')
+      .regex(/^[a-z]+$/, '프로젝트 이름은 소문자로만 이루어져야 합니다.')
       .default(''),
     describe: z
       .string()
@@ -54,6 +55,10 @@ export const PostSchema = {
               (file) => ACCEPTED_FILE_TYPES.includes(file.type),
               '.zip 형식만 업로드 가능합니다.'
             ),
+    tag: z
+      .string()
+      .min(1, { message: '태그(버전) 작성은 필수입니다.' })
+      .default(''),
     port: z
       .string()
       .min(1, { message: '포트 작성은 필수 입니다.' })

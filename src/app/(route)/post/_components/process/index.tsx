@@ -45,6 +45,7 @@ const Process = () => {
             date: data.date,
             port: data.port,
             v_key: data.v_key,
+            tag: data.tag,
           })
         }
         onPrev={() => setStep('Second')}

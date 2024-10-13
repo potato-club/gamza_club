@@ -23,6 +23,12 @@ const Third = () => {
           placeholder="ex) salt 키"
           label="환경 변수"
         />
+        <RHFInput
+          name="tag"
+          size="medium"
+          placeholder="ex) v1.0.0"
+          label="태그(버전)"
+        />
       </div>
       <div className="flex justify-end gap-x-3">
         <CardButton text="이전" value="prev" />

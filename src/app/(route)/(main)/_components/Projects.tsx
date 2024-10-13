@@ -12,6 +12,7 @@ import { List } from '@/app/_types/main';
 const Projects = () => {
   const list: List = React.use(getdata());
 
+  console.log(list);
   return (
     <Carousel className="w-[750px]">
       <CarouselContent>
@@ -37,7 +38,7 @@ export default Projects;
 
 const getdata = async () => {
   try {
-    const res = await fetch(`${process.env.API_URL}/project/list`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/project/list`, {
       next: { revalidate: 10 },
     });
 
