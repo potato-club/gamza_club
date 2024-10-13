@@ -8,13 +8,12 @@ const page = ({ params }: any) => {
   const post = getdata(id);
   const data = use(post);
 
-  if (!data) {
-    return notFound();
-  }
+  if (!data) return notFound();
+
   return (
     <Suspense fallback={<div>loading...</div>}>
       <div className="flex-col gap-6">
-        <GamzaCard title={`프로젝트 수정`} content={<Content id={id} />} />
+        <GamzaCard title={`프로젝트 수정`} content={<Content {...data} />} />
       </div>
     </Suspense>
   );
@@ -24,11 +23,21 @@ export default page;
 
 const getdata = async (id: number) => {
   try {
-    const res = await fetch(`https://koreanjson.com/users/${id}`, {
-      next: { revalidate: 10 },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/project/${id}`,
+      {
+        next: { revalidate: 10 },
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3NzlmYzc0NzhkMGQ3YzM2YTdiMzk3OWMxZDUwMjA5MGE1ZDliMjhlZjBiZmFmZjhiOWEyZGRlZDhjNTg0ODg3YjM0ZjBkYTk1MDEzZmY5Mzc4NzNlMzg4YzE0MjQ5YjgiLCJpYXQiOjE3Mjg4MTAxNzAsImV4cCI6MTcyODgxMzc3MH0.JgaEosboFq4ARHtUlWPhxmZqah_-1nbQT6ERzlONTnBv6Ek0Mgmv3GkCr-hOnIkvVBVcEyqhZrPqWS3nxph4bQ',
+        },
+      }
+    );
+
+    if (res.status === 401 || res.status === 404 || res.status === 500) return;
+
     return res.json();
   } catch (err) {
-    console.log('getTest1 error!');
+    console.log(err);
   }
 };

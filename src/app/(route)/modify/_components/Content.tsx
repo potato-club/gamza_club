@@ -10,26 +10,49 @@ import Link from 'next/link';
 import React from 'react';
 import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
 import { ModifySchema } from '@/app/_utils/validator/modify';
+import { useModifyForm } from '@/app/_hooks/query/useModify';
 
-const Content = ({ id }: { id: number }) => {
+interface Props {
+  id: number;
+  name: string;
+  description: string;
+  state: string;
+  startedDate: string;
+  endedDate: string;
+}
+
+const Content = ({ ...props }: Props) => {
   const { FormFunnel } = useFormFunnel('First');
+  const { mutate } = useModifyForm();
 
   return (
     <FormFunnel>
       <FormFunnel.Step
         name="First"
         schema={ModifySchema}
-        onSubmit={(data) => {
-          console.log(data);
-        }}
+        onSubmit={(data) =>
+          mutate({
+            id: props.id,
+            title: data.title,
+            description: data.describe,
+            status: data.status,
+            date: data.date,
+          })
+        }
       >
         <div className="flex flex-col gap-y-9">
           <div className="flex flex-col gap-y-6 items-center">
-            <RHFInput name="title" placeholder="프로젝트 이름" size="large" />
+            <RHFInput
+              name="title"
+              placeholder="프로젝트 이름"
+              size="large"
+              defaultValue={props.name}
+            />
             <RHFInput
               name="describe"
               placeholder="프로젝트 설명"
               size="large"
+              defaultValue={props.description}
             />
             <RHFRadioGroup
               name="status"
@@ -55,7 +78,15 @@ const Content = ({ id }: { id: number }) => {
                 },
               ]}
             />
-            <RHFCalendar name="date" label="개발 기간" id={'modify-date'} />
+            <RHFCalendar
+              name="date"
+              label="개발 기간"
+              id={'modify-date'}
+              defaultValue={{
+                from: new Date(props.startedDate),
+                to: new Date(props.endedDate),
+              }}
+            />
           </div>
 
           <div className="flex justify-end gap-x-3">
