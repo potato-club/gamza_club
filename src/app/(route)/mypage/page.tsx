@@ -1,10 +1,16 @@
 import { Suspense, use } from 'react';
 import ItemList from './_components/ItemList';
 import TypeButton from '@/app/_components/client/TypeButton';
+import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 const page = ({ params, searchParams }: any) => {
   const dataType = searchParams.type;
   const list = use(getdata());
+
+  console.log(list);
+
+  if (!list) return notFound();
 
   return (
     <div>
@@ -37,17 +43,21 @@ const page = ({ params, searchParams }: any) => {
 export default page;
 
 const getdata = async () => {
+  const accessToken = cookies().get('accessToken')?.value;
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/project/user/list`,
       {
         cache: 'no-store',
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3NzlmYzc0NzhkMGQ3YzM2YTdiMzk3OWMxZDUwMjA5MGE1ZDliMjhlZjBiZmFmZjhiOWEyZGRlZDhjNTg0ODg3YjM0ZjBkYTk1MDEzZmY5Mzc4NzNlMzg4YzE0MjQ5YjgiLCJpYXQiOjE3Mjg4MDQyNzEsImV4cCI6MTcyODgwNzg3MX0.LD0nVdVRJkHYyMaDqRWUSfzzU7NFdYG1SfHNtWn7OP0ucPhyGUDBKrO2tqWK5l-DsizGQB6rW0eMaXVhPWMoJw',
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
+
+    if (res.status === 401 || res.status === 500) return;
+
     return res.json();
   } catch (err) {
     console.log(' error!');
