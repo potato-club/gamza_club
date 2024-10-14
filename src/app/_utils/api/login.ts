@@ -7,7 +7,7 @@ export interface LoginData {
 }
 
 export const login = async (data: LoginData) => {
-  const res = await apiClient.post(
+  const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
     {
       email: data.email,
