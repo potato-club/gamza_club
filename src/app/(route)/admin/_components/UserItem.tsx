@@ -3,8 +3,7 @@ import MutateButton from "./MutateButton";
 
 interface Props {
   id: number;
-  familyName: string;
-  givenName: string;
+  name: string;
   email: string;
   major: string;
 }
@@ -15,8 +14,7 @@ const UserItem = ({ ...props }: Props) => {
       <div className="flex gap-x-5 h-6">
         <span>{props.id.toString().padStart(4, "0")}</span>
         <span className="flex w-[60px] justify-center">
-          {props.familyName || "?"}
-          {props.givenName || "??"}
+          {props.name || "???"}
         </span>
         <span className="w-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
           {props.major || "컴퓨터공학과안녕하세"}
