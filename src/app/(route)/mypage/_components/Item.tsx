@@ -1,10 +1,8 @@
 import React from 'react';
-import MutateButton from '../../admin/_components/MutateButton';
+import MutateButton from './MutateButton';
 interface Project {
   id: number;
   title: string;
-  describe: string;
-  status: string;
   port: number;
   file: string;
 }
@@ -17,21 +15,14 @@ const Item = ({ ...props }: Project) => {
       </div>
 
       {/* 프로젝트 정보 */}
-      <div className="flex justify-between w-[500px] text-ellipsis overflow-hidden">
-        <span className="leading-8 ">{props.title}</span>
-        <span className="leading-8 ">{props.file}</span>
-        <span className="leading-8 ">{props.port}</span>
+      <div className="flex w-[550px] text-ellipsis overflow-hidden">
+        <span className="leading-8 w-[250px]">{props.title}</span>
+        <span className="leading-8 w-[200px]">{props.file}</span>
+        <span className="leading-8 w-[100px]">{props.port}</span>
       </div>
 
-      {/* 버튼 */}
-      <div className="flex">
-        <MutateButton
-          value="삭제"
-          color="text-red-400"
-          id={props.id}
-          type="project"
-        />
-      </div>
+      {/* 삭제 버튼 */}
+      <MutateButton value="삭제" color="text-red-400" />
     </div>
   );
 };
