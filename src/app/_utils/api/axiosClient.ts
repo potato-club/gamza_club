@@ -41,7 +41,7 @@ apiClient.interceptors.response.use(
 
           return apiClient(originalRequest);
         } catch (refreshError) {
-          console.error("Token refresh failed:", refreshError);
+          console.error(refreshError);
         }
       }
     }
