@@ -13,6 +13,8 @@ export const useLogin = () => {
         httpOnly: true,
         maxAge: 3600,
       });
+      alert("로그인에 성공했습니다.");
+      console.log(cookies);
       router.push("/");
     },
     onError: (error) => {
