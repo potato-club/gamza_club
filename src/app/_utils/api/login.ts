@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiClient from "./axiosClient";
+import axiosClient from "./axiosClient";
 
 export interface LoginData {
   email: string;
