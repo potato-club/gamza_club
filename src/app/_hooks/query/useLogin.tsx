@@ -1,20 +1,21 @@
-import { useMutation } from "@tanstack/react-query";
-import { login, LoginData } from "@/app/_utils/api/login";
-import { useRouter } from "next/navigation";
-import { AxiosResponse } from "axios";
+import { useMutation } from '@tanstack/react-query';
+import { login, LoginData } from '@/app/_utils/api/login';
+import { useRouter } from 'next/navigation';
+
 export const useLogin = () => {
   const router = useRouter();
 
   const { mutate, isError, error } = useMutation({
-    mutationKey: ["login"],
+    mutationKey: ['login'],
     mutationFn: (data: LoginData) => login(data),
     onSuccess: (response) => {
-      alert("로그인에 성공했습니다.");
-      router.push("/");
+      alert('로그인에 성공했습니다.');
+      router.push('/');
+      localStorage.setItem('access', response?.data.authorization);
     },
     onError: (error) => {
-      console.error("로그인 실패:", error);
-      alert("로그인에 실패했습니다.");
+      console.error('로그인 실패:', error);
+      alert('로그인에 실패했습니다.');
     },
   });
 
