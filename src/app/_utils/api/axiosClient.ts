@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -6,9 +6,9 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem("access");
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -24,14 +24,17 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      (error.response.status === 401 || error.response.data.code === 5001) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
       try {
         const { data } = await axios.get(`/api/reissue`);
 
-        localStorage.setItem('access', data.authorization);
+        localStorage.setItem("access", data.authorization);
         apiClient.defaults.headers.common[
-          'Authorization'
+          "Authorization"
         ] = `Bearer ${data.authorization}`;
 
         return apiClient(originalRequest);
