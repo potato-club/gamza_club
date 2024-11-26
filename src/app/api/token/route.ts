@@ -23,9 +23,8 @@ export async function POST(req: NextRequest) {
 
     // 에러 응답 처리
     if (axios.isAxiosError(error)) {
-      const status = error.response?.status || 401;
+      const status = error.response?.status || 500;
       const message = error.response?.data?.error || "Failed to authenticate";
-      alert("비밀번호가 틀립니다");
       return NextResponse.json({ error: message }, { status });
     }
 
