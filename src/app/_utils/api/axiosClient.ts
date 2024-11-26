@@ -6,7 +6,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access");
+    const token = localStorage.getItem("accessToken");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -16,30 +16,31 @@ apiClient.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 apiClient.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
+    console.log("Error Response:", error);
+
     const originalRequest = error.config;
 
-    if (
-      (error.response.status === 401 || error.response.data.code === 5001) &&
-      !originalRequest._retry
-    ) {
+    // error.response.data를 출력하여 구조 확인
+    console.log("Error Response Data:", error.response?.data.code);
+
+    if (error.response?.data.code === "5001" && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const { data } = await axios.get(`/api/reissue`);
-
-        localStorage.setItem("access", data.authorization);
+        console.log("Reissue API Response:", data);
+        localStorage.setItem("accessToken", data.authorization);
         apiClient.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${data.authorization}`;
 
         return apiClient(originalRequest);
       } catch (refreshError) {
-        console.error(refreshError);
+        console.error("Reissue Error:", refreshError);
       }
     }
     return Promise.reject(error);
