@@ -10,7 +10,6 @@ import { useLogin } from "@/app/_hooks/query/useLogin";
 const Login = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
-  const router = useRouter();
 
   const { mutate, isError, error } = useLogin();
 
