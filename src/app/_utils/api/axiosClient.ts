@@ -6,7 +6,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("access");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -24,25 +24,22 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      (error.response.status === 401 || error.response.data.code === 5001) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
-        try {
-          const { data } = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/user/reissue`,
-            { token: refreshToken }
-          );
+      try {
+        const { data } = await axios.get(`/api/reissue`);
 
-          localStorage.setItem("accessToken", data.accessToken);
-          apiClient.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${data.accessToken}`;
+        localStorage.setItem("access", data.authorization);
+        apiClient.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${data.authorization}`;
 
-          return apiClient(originalRequest);
-        } catch (refreshError) {
-          console.error(refreshError);
-        }
+        return apiClient(originalRequest);
+      } catch (refreshError) {
+        console.error(refreshError);
       }
     }
     return Promise.reject(error);
