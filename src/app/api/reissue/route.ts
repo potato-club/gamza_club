@@ -3,7 +3,7 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  console.log("리이슈를 실행 했습니다");
+  console.log(cookies().get("refreshToken")?.value);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/user/reissue`,
@@ -14,27 +14,36 @@ export async function GET() {
       }
     );
 
-    const { authorization } = response.headers;
+    // 새로 발급받은 Authorization 토큰
+    const { authorization, refreshToken } = response.headers;
 
     // 클라이언트로 토큰 반환
     return NextResponse.json({ authorization }, { status: 200 });
   } catch (error) {
-    console.error("Error during authentication:", error);
-
     if (axios.isAxiosError(error)) {
       const status = error.response?.status;
+      const errorCode = error.response?.data?.code;
+      const errorMessage = error.response?.data?.error;
 
-      if (status === 5002 || status === 401 || status === 500) {
-        console.error(
-          "Refresh Token expired. Clearing tokens and redirecting to login."
+      if (errorCode === "5002") {
+        return NextResponse.json(
+          { error: "로그인이 만료 되었습니다 움하하" },
+          { status: 300 }
         );
-        // RT 만료: 토큰 제거 후 로그인 화면으로 이동
-        clearTokens();
-        NextResponse.redirect(`${"/login"}`);
+      } else if (status === 401 || status === 500) {
+        // 토큰 만료 외 다른 상태 코드에 대한 처리
+        console.error("Unauthorized or Internal Server Error.");
+        return NextResponse.json(
+          { error: errorMessage || "Failed to authenticate" },
+          { status }
+        );
       }
 
-      const message = error.response?.data?.error || "Failed to authenticate";
-      return NextResponse.json({ error: message }, { status });
+      // 기타 예외 처리
+      return NextResponse.json(
+        { error: errorMessage || "Failed to authenticate" },
+        { status }
+      );
     }
 
     return NextResponse.json(
@@ -43,19 +52,3 @@ export async function GET() {
     );
   }
 }
-
-const clearTokens = () => {
-  // localStorage에서 accessToken 제거
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("access");
-  }
-
-  // 쿠키에서 refreshToken 제거 (HTTP Response에 Set-Cookie로 제거 명령 추가)
-  const response = NextResponse.next();
-  response.cookies.set("refreshtoken", "", {
-    maxAge: -1, // 즉시 제거
-    path: "/",
-  });
-
-  return response;
-};
