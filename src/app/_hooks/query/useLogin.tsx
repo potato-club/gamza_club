@@ -11,7 +11,7 @@ export const useLogin = () => {
     onSuccess: (response) => {
       alert("로그인에 성공했습니다.");
       router.push("/");
-      localStorage.setItem("access", response?.data.authorization);
+      localStorage.setItem("accessToken", response?.data.authorization);
     },
     onError: (error) => {
       console.error("로그인 실패:", error);
