@@ -5,7 +5,7 @@ import First from './First';
 import Second from './Second';
 import Third from './Third';
 import { PostSchema } from '@/app/_utils/validator/post';
-import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
+import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { usePostForm } from '@/app/_hooks/query/usePost';
 
 const Process = () => {
