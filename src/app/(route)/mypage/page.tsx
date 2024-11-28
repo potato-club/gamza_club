@@ -10,10 +10,10 @@ const InnerBox = dynamic(() => import('./_components/InnerBox'), {
 });
 
 const Mypage = ({ searchParams }: any) => {
-  const res = use(authCheck());
   const dataType = searchParams.type;
+  const auth = use(authCheck());
 
-  if (!res) return redirect('/login');
+  if (!auth) return redirect('/login');
 
   return (
     <Suspense fallback={<Loading />}>
