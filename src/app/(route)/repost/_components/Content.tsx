@@ -2,7 +2,7 @@
 
 import { RHFFileInput, RHFInput } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
-import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
+import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { RepostSchema } from '@/app/_utils/validator/repost';
 import Link from 'next/link';
 import React from 'react';

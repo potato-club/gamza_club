@@ -8,7 +8,7 @@ import {
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import Link from 'next/link';
 import React from 'react';
-import { useFormFunnel } from '@/app/_hooks/useFormFunnel';
+import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { ModifySchema } from '@/app/_utils/validator/modify';
 import { useModifyForm } from '@/app/_hooks/query/useModify';
 
