@@ -10,7 +10,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { ModifySchema } from '@/app/_utils/validator/modify';
-import { useModifyForm } from '@/app/_hooks/query/useModify';
+import { useModifyForm } from '@/app/_hooks/react-query/project/useModify';
 
 interface Props {
   id: number;

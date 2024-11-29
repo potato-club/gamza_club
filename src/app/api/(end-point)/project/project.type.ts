@@ -1,3 +1,8 @@
+type DateType = {
+  from: Date;
+  to: Date;
+};
+
 export type PostForm = {
   zip: File;
   title: string;
@@ -9,7 +14,10 @@ export type PostForm = {
   tag: string;
 };
 
-type DateType = {
-  from: Date;
-  to: Date;
+export type ModifyForm = {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+  date: DateType;
 };
