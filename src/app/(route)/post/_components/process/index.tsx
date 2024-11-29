@@ -6,7 +6,7 @@ import Second from './Second';
 import Third from './Third';
 import { PostSchema } from '@/app/_utils/validator/post';
 import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
-import { usePostForm } from '@/app/_hooks/query/usePost';
+import { usePostForm } from '@/app/_hooks/react-query/project/usePost';
 
 const Process = () => {
   const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
