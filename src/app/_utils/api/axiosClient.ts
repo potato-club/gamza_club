@@ -36,23 +36,19 @@ apiClient.interceptors.response.use(
           "Authorization"
         ] = `Bearer ${data.authorization}`;
         const response = NextResponse.next();
-        response.cookies.set("refreshToken", data.refreshToken, {
-          path: "/",
-          httpOnly: true,
-        });
         return apiClient(originalRequest);
       } catch (reissueError: unknown) {
         if (axios.isAxiosError(reissueError)) {
           const { response } = reissueError;
-          console.log(response);
-          if (response && response.status === 300) {
+          const errorMessage = response?.data.error;
+          if (response && response?.status === 450) {
             localStorage.removeItem("accessToken");
             const response = NextResponse.next();
             response.cookies.set("refreshtoken", "", {
               maxAge: -1,
               path: "/",
             });
-            alert("로그인이 만료되었습니다. 다시 로그인 해주세요.");
+            alert(errorMessage);
             window.location.href = "/login";
           }
         } else {
