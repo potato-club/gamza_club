@@ -1,5 +1,5 @@
-import axios from 'axios';
-import axiosClient from './axiosClient';
+import axios from "axios";
+import axiosClient from "./axiosClient";
 
 export interface LoginData {
   email: string;
@@ -20,7 +20,7 @@ export interface LoginData {
 
 export const login = async (data: LoginData) => {
   try {
-    const response = await axios.post('/api/token', {
+    const response = await axios.post("/api/token", {
       email: data.email,
       password: data.password,
     });
