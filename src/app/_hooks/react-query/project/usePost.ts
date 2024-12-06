@@ -1,20 +1,7 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { createProject } from '@/app/_utils/post';
+import { createProject } from '@/app/api/(end-point)/project/post';
+import { PostForm } from '@/app/api/(end-point)/project/project.type';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-export type PostData = {
-  zip: File;
-  title: string;
-  description: string;
-  status: string;
-  date: DateType;
-  port: string;
-  v_key: string | null;
-  tag: string;
-};
-type DateType = {
-  from: Date;
-  to: Date;
-};
 
 export const usePostForm = () => {
   const router = useRouter();
@@ -29,7 +16,7 @@ export const usePostForm = () => {
       port,
       v_key,
       tag,
-    }: PostData) =>
+    }: PostForm) =>
       createProject({
         zip,
         title,

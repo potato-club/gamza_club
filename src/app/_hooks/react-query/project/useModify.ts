@@ -1,23 +1,13 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { modifyProject } from '@/app/_utils/modify';
-export type ModifyData = {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-  date: DateType;
-};
-type DateType = {
-  from: Date;
-  to: Date;
-};
+import { ModifyForm } from '@/app/api/(end-point)/project/project.type';
+import { modifyProject } from '@/app/api/(end-point)/project/put';
 
 export const useModifyForm = () => {
   const router = useRouter();
   const { mutate } = useMutation({
     mutationKey: ['modifyForm'],
-    mutationFn: ({ id, title, description, status, date }: ModifyData) =>
+    mutationFn: ({ id, title, description, status, date }: ModifyForm) =>
       modifyProject({
         id,
         title,
