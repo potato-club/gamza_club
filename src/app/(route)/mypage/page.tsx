@@ -1,4 +1,3 @@
-import { Suspense, use } from 'react';
 import { redirect } from 'next/navigation';
 import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
 import Loading from './loading';
@@ -8,10 +7,12 @@ import Loading from './loading';
 //   ssr: false,
 //   loading: () => <Loading />,
 // });
+import InnerBox from './_components/InnerBox';
+import { Suspense } from '@suspensive/react';
 
-const Mypage = ({ searchParams }: any) => {
-  const dataType = searchParams.type;
-  const auth = use(authCheck());
+const Mypage = async ({ searchParams }: any) => {
+  const { type } = await searchParams;
+  const auth = await authCheck();
 
   if (!auth) return redirect('/login');
 
