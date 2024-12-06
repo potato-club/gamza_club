@@ -8,7 +8,8 @@ import Loading from './loading';
 //   loading: () => <Loading />,
 // });
 import InnerBox from './_components/InnerBox';
-import { Suspense } from '@suspensive/react';
+import { ErrorBoundary, Suspense } from '@suspensive/react';
+import Error from './error';
 
 const Mypage = async ({ searchParams }: any) => {
   const { type } = await searchParams;
@@ -17,9 +18,11 @@ const Mypage = async ({ searchParams }: any) => {
   if (!auth) return redirect('/login');
 
   return (
-    <Suspense fallback={<Loading />}>
-      {/* <InnerBox dataType={dataType} /> */}
-    </Suspense>
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense clientOnly fallback={<Loading />}>
+        <InnerBox dataType={type} />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

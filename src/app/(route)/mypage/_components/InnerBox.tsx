@@ -3,7 +3,7 @@
 import React from 'react';
 import ItemList from './ItemList';
 import TypeButton from '@/app/_components/client/TypeButton';
-import useUserProjects from '@/app/_hooks/query/project/useUserProject';
+import useUserProjects from '@/app/_hooks/react-query/project/useUserProject';
 
 interface Props {
   dataType?: string;
