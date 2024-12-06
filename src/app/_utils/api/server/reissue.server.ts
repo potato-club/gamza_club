@@ -12,6 +12,8 @@ export const getAtFromRt = async () => {
       next: { revalidate: 3600 },
     });
 
+    if (res.status === 500 || res.status === 401) return;
+
     return res.headers;
   } catch (err) {
     console.log('error!');

@@ -1,15 +1,9 @@
 import { redirect } from 'next/navigation';
 import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
-import Loading from './loading';
-// import dynamic from 'next/dynamic';
-
-// const InnerBox = dynamic(() => import('./_components/InnerBox'), {
-//   ssr: false,
-//   loading: () => <Loading />,
-// });
-import InnerBox from './_components/InnerBox';
 import { ErrorBoundary, Suspense } from '@suspensive/react';
+import InnerBox from './_components/InnerBox';
 import Error from './error';
+import Loading from './_components/Loading';
 
 const Mypage = async ({ searchParams }: any) => {
   const { type } = await searchParams;
@@ -30,5 +24,5 @@ export default Mypage;
 
 const authCheck = async () => {
   const resHeader = await getAtFromRt();
-  return resHeader;
+  return !!resHeader;
 };
