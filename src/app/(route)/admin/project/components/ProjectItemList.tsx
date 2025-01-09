@@ -1,21 +1,21 @@
-import React, { use } from 'react';
-import ProjectItem from './ProjectItem';
+"use client";
+import React, { use } from "react";
+import ProjectItem from "./ProjectItem";
 interface Props {
-  list: Promise<any[]>;
+  list: any;
 }
 const ProjectItemList = ({ list }: Props) => {
   const projectData = {
-    title: 'HENEIN',
-    describe: '헤네인입니다요.',
-    status: '완료',
+    title: "HENEIN",
+    describe: "헤네인입니다요.",
+    status: "완료",
     port: 8080,
-    file: 'donggyun.zip',
+    file: "donggyun.zip",
   };
-  const data = use(list);
   return (
     <>
-      {data.length ? (
-        data.map((item, idx) => (
+      {list.data.length ? (
+        list.data.map((item: any, idx: any) => (
           <ProjectItem {...item} project={projectData} key={idx} />
         ))
       ) : (
