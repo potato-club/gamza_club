@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import React, { Suspense, use } from 'react';
 import Content from '../_components/Content';
 
-const page = ({ params }: any) => {
+const ModifyPage = ({ params }: any) => {
   const id = Number(params.id);
   const post = getdata(id);
   const data = use(post);
@@ -20,10 +20,11 @@ const page = ({ params }: any) => {
   );
 };
 
-export default page;
+export default ModifyPage;
 
 const getdata = async (id: number) => {
-  const accessToken = cookies().get('accessToken')?.value;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
     const res = await fetch(

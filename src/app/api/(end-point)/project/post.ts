@@ -1,4 +1,4 @@
-import apiClient from '@/app/_utils/api/axiosClient';
+import apiClient from '@/app/_utils/api/apiClient';
 import { PostForm } from './project.type';
 
 export const createProject = async ({ ...props }: PostForm) => {

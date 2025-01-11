@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 export const getAtFromRt = async () => {
-  const refresh = cookies().get('refreshToken')?.value;
+  const refresh = (await cookies()).get('refreshToken')?.value;
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/reissue`, {

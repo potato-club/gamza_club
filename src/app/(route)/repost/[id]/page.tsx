@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import React, { Suspense, use } from 'react';
 import Content from '../_components/Content';
 
-const page = ({ params }: any) => {
+const RepostPage = ({ params }: any) => {
   const id = Number(params.id);
   const post = getdata(id);
   const data = use(post);
@@ -23,7 +23,7 @@ const page = ({ params }: any) => {
   );
 };
 
-export default page;
+export default RepostPage;
 
 const getdata = async (id: number) => {
   try {
