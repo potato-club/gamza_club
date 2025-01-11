@@ -1,59 +1,68 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useFunnel } from "@/app/_hooks/useFunnel";
-import FirstCard from "./FirstCard";
-import SecondCard from "./SecondCard";
-import ThirdCard from "./ThirdCard";
-
-type FormData = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  lastName: string;
-  firstName: string;
-  department: string;
-  studentID: string;
-};
-
+'use client';
+import React, { useState } from 'react';
+import FirstCard from './FirstCard';
+import SecondCard from './SecondCard';
+import ThirdCard from './ThirdCard';
+import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
+import { SignUpSchema } from '@/app/_utils/validator/signup';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 const CardNumber = () => {
-  const { Funnel, setStep } = useFunnel<"First" | "Second" | "Third">("First");
+  const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
+    'First'
+  );
+  const router = useRouter();
 
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    lastName: "",
-    firstName: "",
-    department: "",
-    studentID: "",
-  });
-
-  const handleSubmitForm = () => {
-    console.log("Form submitted with data: ", formData);
+  const handleSubmit = async (data: any) => {
+    try {
+      const response = await axios.post('http://3.34.207.58:8080/user/signup', {
+        familyName: data.firstName,
+        givenName: data.lastName,
+        email: data.email,
+        password: data.password,
+        major: data.major,
+        studentId: data.studentNumber,
+      });
+      alert('회원가입이 완료되었습니다!');
+      router.push('/login');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          'Failed to sign up:',
+          error.response?.data || error.message
+        );
+      } else {
+        console.error('Error:', error);
+      }
+    }
   };
 
   return (
-    <div>
-      <Funnel>
-        <Funnel.Step name="First">
-          <FirstCard setStep={setStep} />
-        </Funnel.Step>
-        <Funnel.Step name="Second">
-          <SecondCard
-            setStep={setStep}
-            setFormData={setFormData}
-            formData={formData}
-          />
-        </Funnel.Step>
-        <Funnel.Step name="Third">
-          <ThirdCard
-            setStep={setStep}
-            setFormData={setFormData}
-            handleSubmitForm={handleSubmitForm}
-          />
-        </Funnel.Step>
-      </Funnel>
-    </div>
+    <FormFunnel>
+      <FormFunnel.Step
+        name="First"
+        schema={SignUpSchema.first}
+        onNext={() => setStep('Second')}
+      >
+        <FirstCard />
+      </FormFunnel.Step>
+      <FormFunnel.Step
+        name="Second"
+        schema={SignUpSchema.second}
+        onNext={() => setStep('Third')}
+        onPrev={() => setStep('First')}
+      >
+        <SecondCard />
+      </FormFunnel.Step>
+      <FormFunnel.Step
+        name="Third"
+        schema={SignUpSchema.third}
+        onPrev={() => setStep('Second')}
+        onSubmit={handleSubmit}
+      >
+        <ThirdCard />
+      </FormFunnel.Step>
+    </FormFunnel>
   );
 };
 

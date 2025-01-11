@@ -211,9 +211,10 @@ const CarouselPrevious = React.forwardRef<
           ? '-left-12 top-1/2 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
-        'hover:shadow-inner bg-white'
+        'hover:shadow-inner bg-white',
+        !canScrollPrev ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
       )}
-      disabled={!canScrollPrev}
+      aria-disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
@@ -241,9 +242,10 @@ const CarouselNext = React.forwardRef<
           ? '-right-12 top-1/2 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
-        'hover:shadow-inner bg-white'
+        'hover:shadow-inner bg-white',
+        !canScrollNext ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
       )}
-      disabled={!canScrollNext}
+      aria-disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >

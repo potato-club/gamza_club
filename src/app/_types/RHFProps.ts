@@ -27,13 +27,15 @@ export interface RHFInputProps {
   label?: string;
   placeholder: string;
   type?: HTMLInputTypeAttribute;
-  size: 'large' | 'medium';
+  size: 'large' | 'medium' | 'small';
+  defaultValue?: string;
 }
 
 export interface RHFFileInputProps {
   name: string;
   label?: string;
   placeholder: string;
+  defaultValue?: File;
 }
 
 type RadioItem = {
@@ -55,4 +57,14 @@ export interface RHFCalendarProps {
   name: string;
   label: string;
   id: string;
+  defaultValue?: DateType;
+}
+type DateType = {
+  from: Date;
+  to: Date;
+};
+
+export interface RHFCheckBoxProps {
+  name: string;
+  label: string;
 }

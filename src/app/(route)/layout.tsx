@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import './_styles/globals.css';
+import '../_styles/globals.css';
 import localFont from 'next/font/local';
+import QueryProvider from '../_components/provider/QueryProvider';
 
 const pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.woff2',
+  src: '../../../public/fonts/PretendardVariable.woff2',
   display: 'swap',
   weight: '100 200 300 400 500 600 700 800 900',
   variable: '--font-pretendard',
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={pretendard.className} suppressHydrationWarning={true}>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

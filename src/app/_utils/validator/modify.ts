@@ -4,6 +4,7 @@ export const ModifySchema = z.object({
   title: z
     .string()
     .min(2, '프로젝트 이름은 두글자 이상이어야 합니다.')
+    .regex(/^[a-z]+$/, '프로젝트 이름은 소문자로만 이루어져야 합니다.')
     .default(''),
   describe: z
     .string()
@@ -11,10 +12,10 @@ export const ModifySchema = z.object({
     .max(20, '설명은 20자 이하로 해주세요')
     .default(''),
   status: z
-    .enum(['plan', 'progress', 'complete'], {
+    .enum(['PLAN', 'PROGRESS', 'DONE'], {
       required_error: '상태 값 한가지는 필수입니다.',
     })
-    .default('complete'),
+    .default('DONE'),
   date: z
     .object({
       from: z

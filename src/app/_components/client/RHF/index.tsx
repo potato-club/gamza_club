@@ -12,6 +12,7 @@ import {
   RHFRadioGroupProps,
   RHFCalendarProps,
   RHFFileInputProps,
+  RHFCheckBoxProps,
 } from '@/app/_types/RHFProps';
 import { Label } from '@/app/_components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
@@ -20,6 +21,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/app/_utils/utils';
 import { Button } from '@/app/_components/ui/button';
 import { Calendar } from '@/app/_components/ui/calendar';
+import { Checkbox } from '../../ui/checkbox';
 import {
   Popover,
   PopoverContent,
@@ -27,6 +29,7 @@ import {
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
 import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
 
 export const RHFWrapper = ({
   children,
@@ -53,12 +56,20 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
+  defaultValue,
 }: RHFInputProps) => {
   const {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -107,12 +118,20 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
+  defaultValue,
 }: RHFFileInputProps) => {
   const {
     control,
     formState: { errors },
     getValues,
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -204,11 +223,23 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
+export const RHFCalendar = ({
+  name,
+  label,
+  id,
+  defaultValue,
+}: RHFCalendarProps) => {
   const {
     control,
     formState: { errors },
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -265,6 +296,37 @@ export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
               </Popover>
             </FormControl>
           </div>
+        </FormItem>
+      )}
+    />
+  );
+};
+
+export const RHFCheckbox = ({ name, label }: RHFCheckBoxProps) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex items-center ">
+          <FormControl>
+            <Checkbox
+              id={name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+          </FormControl>
+          <FormLabel htmlFor={name} className="text-sm font-medium">
+            {label}
+          </FormLabel>
+          {errors[name]?.message && (
+            <RHFErrorSpan message={errors[name]?.message} />
+          )}
         </FormItem>
       )}
     />

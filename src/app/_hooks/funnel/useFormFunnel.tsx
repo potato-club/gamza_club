@@ -1,8 +1,8 @@
 import { ReactNode, isValidElement, FC, useState, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { z } from 'zod';
-import { RHFWrapper } from '../_components/client/RHF';
 import { useSchemaForm } from './useSchemaForm';
+import { RHFWrapper } from '@/app/_components/client/RHF';
 
 type StepProps = {
   name: string;

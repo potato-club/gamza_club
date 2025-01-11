@@ -1,11 +1,14 @@
-import React from 'react';
-import MutateButton from '../../_components/MutateButton';
+import React from "react";
+import MutateButton from "../../_components/MutateButton";
 
 interface Props {
   id: number;
+  userName: string;
   name: string;
   email: string;
   major: string;
+  status: string;
+  description: string;
   project: Project;
 }
 interface Project {
@@ -16,25 +19,24 @@ interface Project {
   file: string;
 }
 const ProjectItem = ({ ...props }: Props) => {
-  console.log(props.project);
   return (
     <div className="flex justify-between items-center border border-stone-200 bg-white w-full h-[70px] px-5 py-3 rounded-xl">
       {/* 업로더 이름, 학과 */}
       <div className="flex gap-x-5 h-6">
-        <span>{props.id.toString().padStart(4, '0')}</span>
+        <span>{props.id.toString().padStart(2, "0")}</span>
         <span className="flex w-[60px] justify-center">
-          {props.name || '이름'}
+          {props.userName || "이름"}
         </span>
         <span className="w-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
-          {props.major || '컴퓨터공학과안녕하세'}
+          {props.major || "컴퓨터공학과안녕하세"}
         </span>
       </div>
 
       {/* 프로젝트 정보 */}
       <div className="w-[380px] text-ellipsis overflow-hidden">
         <span className="leading-8 ">
-          {props.project.title} / {props.project.status} / {props.project.port}{' '}
-          / {props.project.file} / {props.project.describe}
+          {props.name} / {props.status} / {props.project.port}/{" "}
+          {props.project.file} / {props.description}
         </span>
       </div>
 

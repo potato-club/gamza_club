@@ -10,7 +10,6 @@ const First = () => {
         <RHFInput name="describe" size="large" placeholder="프로젝트 설명" />
       </div>
       <div className="flex justify-end gap-x-3">
-        <input />
         <CardButton text="다음" color="green" value="next" />
       </div>
     </div>

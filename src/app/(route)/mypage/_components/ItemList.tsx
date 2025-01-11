@@ -1,29 +1,20 @@
-import React, { use } from 'react';
+import React from 'react';
 import Item from './Item';
 
 interface Props {
-  list: Promise<any[]>;
+  list: any[];
 }
 const ItemList = ({ list }: Props) => {
-  const projectData = {
-    title: 'HENEIN',
-    describe: '헤네인입니다요.',
-    status: '완료',
-    port: 8080,
-    file: 'donggyun.zip',
-  };
-  const data = use(list);
-  console.log(data);
   return (
     <>
-      {data.length ? (
-        data.map((item, idx) => (
-          <Item {...item} project={projectData} key={idx} />
+      {list.length ? (
+        list.map((item: any, idx: number) => (
+          <Item {...item} id={idx} key={idx} />
         ))
       ) : (
         <div className="flex justify-center items-center h-full">
           <span className="text-xl font-bold">
-            좌측 상단의 데이터 타입을 선택해 주세요.
+            프로젝트가 존재하지 않습니다.
           </span>
         </div>
       )}

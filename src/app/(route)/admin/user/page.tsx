@@ -1,23 +1,12 @@
-import React from 'react';
-import UserItem from '../_components/UserItem';
-
-const getdata = async () => {
-  try {
-    const res = await fetch('https://koreanjson.com/users');
-    return res.json();
-  } catch (err) {
-    console.log('getTest1 error!');
-  }
-};
-
-const page = async () => {
-  const item = await getdata();
+import React from "react";
+import UserList from "./UserList";
+import { Suspense } from "@suspensive/react";
+import Loading from "../_components/Loading";
+const page = () => {
   return (
-    <div className="flex flex-col gap-y-4 w-[1010px] h-[520px] border border-stone-200 bg-white rounded-lg py-10 px-8 overflow-auto">
-      {item.map((item: any) => (
-        <UserItem key={item.id} {...item} />
-      ))}
-    </div>
+    <Suspense clientOnly fallback={<Loading />}>
+      <UserList />
+    </Suspense>
   );
 };
 

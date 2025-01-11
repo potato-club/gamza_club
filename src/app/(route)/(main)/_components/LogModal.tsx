@@ -20,7 +20,7 @@ const LogModal = ({ ...props }) => {
       <Card className="flex-col gap-y-4 w-[626px] px-10 py-9 bg-white rounded-3xl">
         <CardHeader className="flex-row justify-between p-0">
           <div className="flex items-center gap-x-2">
-            <CardTitle className="text-xl">{props.title}</CardTitle>
+            <CardTitle className="text-xl">{props.name}</CardTitle>
             <Refresh onClick={close} isLoading={false} />
           </div>
           <Close onClick={close} />

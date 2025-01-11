@@ -1,7 +1,13 @@
 export type List = {
-  title: string;
-  describe: string;
-  status: 'plan' | 'progress' | 'complete';
-  content: string;
-  footer: string;
+  size: number;
+  contents: Item[];
+};
+
+export type Item = {
+  id: number;
+  name: string;
+  description: string;
+  state: 'PLAN' | 'PROGRESS' | 'DONE';
+  startedDate: string;
+  endedDate: string;
 };
