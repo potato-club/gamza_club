@@ -1,4 +1,8 @@
-import { RHFCalendar, RHFRadioGroup } from '@/app/_components/client/RHF';
+import {
+  RHFCalendar,
+  RHFListSelector,
+  RHFRadioGroup,
+} from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
 
@@ -31,6 +35,18 @@ const Second = () => {
           ]}
         />
         <RHFCalendar name="date" label="프로젝트 기간" id="date" />
+        <RHFListSelector
+          name="collaborators"
+          label="공동 작업자"
+          userList={[
+            { id: 1, name: '동균', studentId: '201910050' },
+            { id: 2, name: '효성', studentId: '201910052' },
+            { id: 3, name: '성훈', studentId: '201910051' },
+            { id: 4, name: '이삭', studentId: '200710060' },
+            { id: 5, name: '지현', studentId: '202010050' },
+            { id: 6, name: '호빈', studentId: '202010011' },
+          ]}
+        />
       </div>
       <div className="flex justify-end gap-x-3">
         <CardButton text="이전" value="prev" />

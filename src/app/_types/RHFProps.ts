@@ -68,3 +68,15 @@ export interface RHFCheckBoxProps {
   name: string;
   label: string;
 }
+
+export type Collaborator = {
+  id: number;
+  name: string;
+  studentId: string;
+};
+export interface RHFListSelectorProps {
+  name: string;
+  label: string;
+  userList: Collaborator[];
+  defaultValue?: Collaborator[];
+}

@@ -13,6 +13,7 @@ import {
   RHFCalendarProps,
   RHFFileInputProps,
   RHFCheckBoxProps,
+  RHFListSelectorProps,
 } from '@/app/_types/RHFProps';
 import { Label } from '@/app/_components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
@@ -21,7 +22,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/app/_utils/utils';
 import { Button } from '@/app/_components/ui/button';
 import { Calendar } from '@/app/_components/ui/calendar';
-import { Checkbox } from '../../ui/checkbox';
+import { Checkbox } from '@/app/_components/ui/checkbox';
 import {
   Popover,
   PopoverContent,
@@ -30,6 +31,15 @@ import {
 import { FileInput, NormalInput } from './ui';
 import { useFormContext } from 'react-hook-form';
 import { useEffect } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/_components/ui/select';
+import CollaboratorList from './ui/CollaboratorList';
+import Image from 'next/image';
 
 export const RHFWrapper = ({
   children,
@@ -233,6 +243,7 @@ export const RHFCalendar = ({
     control,
     formState: { errors },
     setValue,
+    watch,
   } = useFormContext();
 
   useEffect(() => {
@@ -328,6 +339,78 @@ export const RHFCheckbox = ({ name, label }: RHFCheckBoxProps) => {
             <RHFErrorSpan message={errors[name]?.message} />
           )}
         </FormItem>
+      )}
+    />
+  );
+};
+
+export const RHFListSelector = ({
+  name,
+  label,
+  userList,
+  defaultValue,
+}: RHFListSelectorProps) => {
+  const {
+    control,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <div className="flex flex-col gap-1">
+          <FormItem className="flex gap-x-10 items-center w-full justify-center">
+            <FormLabel className="w-[88px] font-normal text-[rgba(0,0,0,0.6)] text-sm">
+              {label}
+            </FormLabel>
+            <div className="flex flex-col gap-1">
+              <Select
+                onValueChange={(value) => {
+                  const user = userList.find(
+                    (item) => item.id === Number(value)
+                  );
+                  if (user) field.onChange([...field.value, user]);
+                }}
+              >
+                <FormControl className="w-[225px] bg-white">
+                  <SelectTrigger>
+                    <SelectValue placeholder="사용자를 선택해 주세요." />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="bg-white h-[120px]">
+                  {userList.map((user) => (
+                    <SelectItem
+                      key={user.id}
+                      value={String(user.id)}
+                      className="hover:bg-gray-100 hover:cursor-pointer"
+                    >
+                      <div className="flex gap-3">
+                        <Image
+                          src={'/Logo.svg'}
+                          alt="감자"
+                          width={20}
+                          height={20}
+                        />
+                        <span>{`${user.name} (${user.studentId})`}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </FormItem>
+          <CollaboratorList field={field} selectUsers={watch().collaborators} />
+        </div>
       )}
     />
   );

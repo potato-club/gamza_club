@@ -3,6 +3,12 @@ import { z } from 'zod';
 const MAX_FILE_SIZE = 200000000;
 const ACCEPTED_FILE_TYPES = ['application/zip'];
 
+const collaboratorSchema = z.object({
+  id: z.number().default(0),
+  name: z.string().default(''),
+  studentId: z.string().default(''),
+});
+
 export const PostSchema = {
   first: z.object({
     title: z
@@ -40,6 +46,7 @@ export const PostSchema = {
         }
       )
       .default({ from: null, to: null }),
+    collaborators: z.array(collaboratorSchema).default([]),
   }),
   third: z.object({
     file:

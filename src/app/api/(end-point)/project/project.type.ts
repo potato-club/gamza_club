@@ -12,6 +12,7 @@ export type PostForm = {
   port: string;
   v_key: string | null;
   tag: string;
+  collaborators: number[];
 };
 
 export type ModifyForm = {

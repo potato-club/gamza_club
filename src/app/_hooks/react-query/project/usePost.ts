@@ -16,6 +16,7 @@ export const usePostForm = () => {
       port,
       v_key,
       tag,
+      collaborators,
     }: PostForm) =>
       createProject({
         zip,
@@ -26,6 +27,7 @@ export const usePostForm = () => {
         port,
         v_key,
         tag,
+        collaborators,
       }),
     onSuccess: () => {
       alert(
