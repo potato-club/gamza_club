@@ -4,9 +4,12 @@ import {
   RHFRadioGroup,
 } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
+import { useUserList } from '@/app/_hooks/react-query/user/useUserList';
 import React from 'react';
 
 const Second = () => {
+  const { data } = useUserList();
+
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 py-7">
@@ -38,14 +41,7 @@ const Second = () => {
         <RHFListSelector
           name="collaborators"
           label="공동 작업자"
-          userList={[
-            { id: 1, name: '동균', studentId: '201910050' },
-            { id: 2, name: '효성', studentId: '201910052' },
-            { id: 3, name: '성훈', studentId: '201910051' },
-            { id: 4, name: '이삭', studentId: '200710060' },
-            { id: 5, name: '지현', studentId: '202010050' },
-            { id: 6, name: '호빈', studentId: '202010011' },
-          ]}
+          userList={data.userList}
         />
       </div>
       <div className="flex justify-end gap-x-3">
