@@ -390,27 +390,38 @@ export const RHFListSelector = ({
               >
                 <FormControl className="w-[225px] bg-white">
                   <SelectTrigger>
-                    <SelectValue placeholder="사용자를 선택해 주세요." />
+                    <input
+                      placeholder="유저를 선택해 주세요."
+                      defaultValue={'유저를 선택해 주세요.'}
+                      type="button"
+                      className="hover:cursor-pointer"
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="bg-white max-h-[130px] h-auto">
-                  {users.map((user) => (
-                    <SelectItem
-                      key={user.id}
-                      value={String(user.id)}
-                      className="hover:bg-gray-100 hover:cursor-pointer"
-                    >
-                      <div className="flex gap-3">
-                        <Image
-                          src={'/Logo.svg'}
-                          alt="감자"
-                          width={20}
-                          height={20}
-                        />
-                        <span>{`${user.name} (${user.studentId})`}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
+                  {users.length ? (
+                    users.map((user) => (
+                      <SelectItem
+                        key={user.id}
+                        value={String(user.id)}
+                        className="hover:bg-gray-100 hover:cursor-pointer"
+                      >
+                        <div className="flex gap-3">
+                          <Image
+                            src={'/Logo.svg'}
+                            alt="감자"
+                            width={20}
+                            height={20}
+                          />
+                          <span>{`${user.name} (${user.studentId})`}</span>
+                        </div>
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <div className="flex justify-center items-center p-[20px_10px] text-[13px] font-bold">
+                      선택할 유저가 없습니다.
+                    </div>
+                  )}
                 </SelectContent>
               </Select>
             </div>
