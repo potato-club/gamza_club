@@ -14,6 +14,7 @@ import {
   RHFFileInputProps,
   RHFCheckBoxProps,
   RHFListSelectorProps,
+  Collaborator,
 } from '@/app/_types/RHFProps';
 import { Label } from '@/app/_components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
@@ -363,6 +364,13 @@ export const RHFListSelector = ({
     }
   }, [defaultValue, name, setValue]);
 
+  const users = userList.filter(
+    (user) =>
+      !watch()
+        .collaborators.map((item: Collaborator) => item.id)
+        .includes(user.id)
+  );
+
   return (
     <FormField
       control={control}
@@ -376,9 +384,7 @@ export const RHFListSelector = ({
             <div className="flex flex-col gap-1">
               <Select
                 onValueChange={(value) => {
-                  const user = userList.find(
-                    (item) => item.id === Number(value)
-                  );
+                  const user = users.find((item) => item.id === Number(value));
                   if (user) field.onChange([...field.value, user]);
                 }}
               >
@@ -387,8 +393,8 @@ export const RHFListSelector = ({
                     <SelectValue placeholder="사용자를 선택해 주세요." />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="bg-white h-[120px]">
-                  {userList.map((user) => (
+                <SelectContent className="bg-white max-h-[130px] h-auto">
+                  {users.map((user) => (
                     <SelectItem
                       key={user.id}
                       value={String(user.id)}
