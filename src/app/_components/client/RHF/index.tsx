@@ -30,7 +30,7 @@ import {
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import {
   Select,
   SelectContent,
@@ -322,13 +322,13 @@ export const RHFListSelector = ({
   const {
     control,
     formState: { errors },
-    watch,
   } = useFormContext();
+  const formData = useWatch({ control });
 
   const users = userList.filter(
     (user) =>
-      !watch()
-        .collaborators.map((item: Collaborator) => item.id)
+      !formData.collaborators
+        .map((item: Collaborator) => item.id)
         .includes(user.id)
   );
 
@@ -387,7 +387,10 @@ export const RHFListSelector = ({
               </Select>
             </div>
           </FormItem>
-          <CollaboratorList field={field} selectUsers={watch().collaborators} />
+          <CollaboratorList
+            field={field}
+            selectUsers={formData.collaborators}
+          />
         </div>
       )}
     />
