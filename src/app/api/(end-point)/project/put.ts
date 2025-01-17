@@ -10,6 +10,7 @@ export const modifyProject = async ({ ...props }: ModifyForm) => {
       description: props.description,
       startedDate: props.date.from.toISOString().split('T')[0],
       endedDate: props.date.to.toISOString().split('T')[0],
+      collaborators: props.collaborators.join(','),
     },
     {
       headers: {

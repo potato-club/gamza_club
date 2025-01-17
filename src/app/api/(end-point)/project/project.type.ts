@@ -21,4 +21,5 @@ export type ModifyForm = {
   description: string;
   status: string;
   date: DateType;
+  collaborators: number[];
 };
