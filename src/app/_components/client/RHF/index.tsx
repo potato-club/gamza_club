@@ -31,7 +31,6 @@ import {
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 import {
   Select,
   SelectContent,
@@ -67,20 +66,12 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
-  defaultValue,
 }: RHFInputProps) => {
   const {
     control,
     formState: { errors },
     watch,
-    setValue,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -129,20 +120,12 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
-  defaultValue,
 }: RHFFileInputProps) => {
   const {
     control,
     formState: { errors },
     getValues,
-    setValue,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -192,7 +175,6 @@ export const RHFRadioGroup = ({
   const {
     control,
     formState: { errors },
-    watch,
   } = useFormContext();
 
   return (
@@ -234,24 +216,11 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({
-  name,
-  label,
-  id,
-  defaultValue,
-}: RHFCalendarProps) => {
+export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
   const {
     control,
     formState: { errors },
-    setValue,
-    watch,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -349,20 +318,12 @@ export const RHFListSelector = ({
   name,
   label,
   userList,
-  defaultValue,
 }: RHFListSelectorProps) => {
   const {
     control,
     formState: { errors },
-    setValue,
     watch,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   const users = userList.filter(
     (user) =>
