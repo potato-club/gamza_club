@@ -8,6 +8,7 @@ import {
 } from '@/app/_components/ui/carousel';
 import ProjectItem from './ProjectItem';
 import { List } from '@/app/_types/main';
+import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
 
 const Projects = () => {
   const list: List = React.use(getdata());
@@ -37,9 +38,15 @@ const Projects = () => {
 export default Projects;
 
 const getdata = async () => {
+  const headers = await getAtFromRt();
+  const accessToken = headers?.get('authorization');
+
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/project/list`, {
       cache: 'no-store',
+      headers: {
+        Authorization: accessToken ? `Bearer ${accessToken}` : '',
+      },
     });
 
     return res.json();
