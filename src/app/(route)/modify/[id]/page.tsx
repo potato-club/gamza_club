@@ -6,38 +6,39 @@ import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
 import LoadingSpinner from '@/app/_components/server/LoadingSpinner';
 import { prefetchUserList } from '@/app/_hooks/react-query/user/useUserList';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import TokenSetWrapper from '@/app/_components/client/TokenSetWrapper';
 
 const ModifyPage = ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = use(params);
-  const post = getdata(Number(id));
-  const data = use(post);
+  const accessToken = use(getAtFromRt());
+  if (!accessToken) return notFound();
 
+  const { id } = use(params);
+  const data = use(getdata(Number(id), accessToken || ''));
   if (!data) return notFound();
 
   const { queryClient } = use(prefetchUserList());
 
   return (
-    <Suspense fallback={<LoadingSpinner className="w-[150px] h-[150px]" />}>
-      <div className="flex-col gap-6">
-        <GamzaCard
-          title={`프로젝트 수정`}
-          content={
-            <HydrationBoundary state={dehydrate(queryClient)}>
-              <Content {...data} />
-            </HydrationBoundary>
-          }
-        />
-      </div>
-    </Suspense>
+    <TokenSetWrapper token={accessToken}>
+      <Suspense fallback={<LoadingSpinner className="w-[150px] h-[150px]" />}>
+        <div className="flex-col gap-6">
+          <GamzaCard
+            title={`프로젝트 수정`}
+            content={
+              <HydrationBoundary state={dehydrate(queryClient)}>
+                <Content {...data} />
+              </HydrationBoundary>
+            }
+          />
+        </div>
+      </Suspense>
+    </TokenSetWrapper>
   );
 };
 
 export default ModifyPage;
 
-const getdata = async (id: number) => {
-  const headers = await getAtFromRt();
-  const accessToken = headers?.get('authorization');
-
+const getdata = async (id: number, accessToken: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/project/${id}`,

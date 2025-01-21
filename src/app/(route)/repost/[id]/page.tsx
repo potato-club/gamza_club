@@ -5,13 +5,14 @@ import Content from '../_components/Content';
 import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
 
 const RepostPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const accessToken = use(getAtFromRt());
+  if (!accessToken) return notFound();
+
   const { id } = use(params);
-  const post = getdata(Number(id));
+  const post = getdata(Number(id), accessToken);
   const data = use(post);
 
-  if (!data) {
-    return notFound();
-  }
+  if (!data) return notFound();
 
   return (
     <Suspense fallback={<div>loading...</div>}>
@@ -27,10 +28,7 @@ const RepostPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
 export default RepostPage;
 
-const getdata = async (id: number) => {
-  const headers = await getAtFromRt();
-  const accessToken = headers?.get('authorization');
-
+const getdata = async (id: number, accessToken: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/project/app/${id}`,
