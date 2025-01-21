@@ -11,4 +11,5 @@ export type Item = {
   startedDate: string;
   endedDate: string;
   isCollaborator: boolean;
+  route: string;
 };

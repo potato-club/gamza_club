@@ -21,6 +21,7 @@ const ProjectItem = ({ ...props }: Item) => {
     isCollaborator,
     startedDate,
     endedDate,
+    route,
   } = props;
 
   return (
@@ -35,10 +36,10 @@ const ProjectItem = ({ ...props }: Item) => {
           <>
             <LogWatch {...props} />
             <ModifyButton id={id} />
-            <ProjectLinkButton />
+            <ProjectLinkButton route={route} />
           </>
         ) : (
-          <ProjectLinkButton />
+          <ProjectLinkButton route={route} />
         )}
       </CardFooter>
     </Card>
