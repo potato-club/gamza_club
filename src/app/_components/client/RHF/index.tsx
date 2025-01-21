@@ -124,8 +124,9 @@ export const RHFFileInput = ({
   const {
     control,
     formState: { errors },
-    getValues,
   } = useFormContext();
+
+  const formData = useWatch({ control });
 
   return (
     <FormField
@@ -145,7 +146,7 @@ export const RHFFileInput = ({
                 <FileInput
                   accept="application/zip"
                   field={field}
-                  fileName={getValues().file && getValues().file.name}
+                  fileName={formData.file && formData.file.name}
                 />
               </FormControl>
             </FormItem>
@@ -156,7 +157,7 @@ export const RHFFileInput = ({
                   accept="application/zip"
                   field={field}
                   placeholder={placeholder}
-                  fileName={getValues().file && getValues().file.name}
+                  fileName={formData.file && formData.file.name}
                 />
               </FormControl>
             </FormItem>
