@@ -9,6 +9,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import UpdateButton from '../../modify/_components/UpdateButton';
 import { convertURLtoFile } from '@/app/_utils/convertURLtoFile';
+import { useAppModify } from '@/app/_hooks/react-query/project/useAppModify';
 
 interface Props {
   id: number;
@@ -21,6 +22,7 @@ interface Props {
 const Content = (props: Props) => {
   const { id, file, port, tag, variableKey } = props;
   const { FormFunnel } = useFormFunnel('First');
+  const { mutate } = useAppModify();
 
   const [fileData, setFileData] = useState<null | File>(null);
 
@@ -37,7 +39,15 @@ const Content = (props: Props) => {
       <FormFunnel.Step
         name="First"
         schema={RepostSchema}
-        onSubmit={(data) => console.log('repost submit 요청!', data)}
+        onSubmit={(data) =>
+          mutate({
+            id,
+            file: data.file,
+            port: data.port,
+            v_key: data.v_key,
+            tag: data.tag,
+          })
+        }
       >
         <div className="flex flex-col gap-y-5">
           <div className="flex flex-col gap-y-6 items-center p-7">
@@ -46,7 +56,7 @@ const Content = (props: Props) => {
                 file: fileData,
                 port: String(port),
                 tag,
-                v_key: variableKey,
+                v_key: variableKey || '',
               }}
             >
               <RHFFileInput
