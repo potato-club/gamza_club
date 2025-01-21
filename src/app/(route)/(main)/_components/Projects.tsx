@@ -38,11 +38,8 @@ export default Projects;
 
 const getdata = async () => {
   try {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 500);
-    });
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/project/list`, {
-      next: { revalidate: 10 },
+      cache: 'no-store',
     });
 
     return res.json();

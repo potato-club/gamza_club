@@ -1,24 +1,22 @@
-import { Suspense, use } from 'react';
 import { redirect } from 'next/navigation';
 import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
-import Loading from './loading';
-import dynamic from 'next/dynamic';
+import { ErrorBoundary, Suspense } from '@suspensive/react';
+import InnerBox from './_components/InnerBox';
+import Error from './error';
+import Loading from './_components/Loading';
 
-const InnerBox = dynamic(() => import('./_components/InnerBox'), {
-  ssr: false,
-  loading: () => <Loading />,
-});
-
-const Mypage = ({ searchParams }: any) => {
-  const dataType = searchParams.type;
-  const auth = use(authCheck());
+const Mypage = async ({ searchParams }: any) => {
+  const { type } = await searchParams;
+  const auth = await authCheck();
 
   if (!auth) return redirect('/login');
 
   return (
-    <Suspense fallback={<Loading />}>
-      <InnerBox dataType={dataType} />
-    </Suspense>
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense clientOnly fallback={<Loading />}>
+        <InnerBox dataType={type} />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
@@ -26,5 +24,5 @@ export default Mypage;
 
 const authCheck = async () => {
   const resHeader = await getAtFromRt();
-  return resHeader;
+  return !!resHeader;
 };
