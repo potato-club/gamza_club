@@ -1,4 +1,5 @@
 import useUpdateFormStore from '@/app/_store/form/useUpdateFormStore';
+import { isEqual } from 'es-toolkit';
 import React, { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
@@ -22,8 +23,7 @@ const UpdateTrackingWrapper = ({ children, compareData }: Props) => {
   // 변경 감지 및 전역 상태 업데이트
   useEffect(() => {
     const isDifferent = Object.keys(compareData).some(
-      (key) =>
-        JSON.stringify(compareData[key]) !== JSON.stringify(watchedData[key])
+      (key) => !isEqual(compareData[key], watchedData[key])
     );
 
     setIsDifferent(isDifferent);
