@@ -10,4 +10,6 @@ export type Item = {
   state: 'PLAN' | 'PROGRESS' | 'DONE';
   startedDate: string;
   endedDate: string;
+  isCollaborator: boolean;
+  route: string;
 };

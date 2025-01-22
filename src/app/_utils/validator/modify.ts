@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+const collaboratorSchema = z.object({
+  id: z.number().default(0),
+  name: z.string().default(''),
+  studentId: z.string().default(''),
+});
+
 export const ModifySchema = z.object({
   title: z
     .string()
@@ -34,4 +40,5 @@ export const ModifySchema = z.object({
       }
     )
     .default({ from: null, to: null }),
+  collaborators: z.array(collaboratorSchema).default([]),
 });

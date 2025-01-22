@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 
 export const getAtFromRt = async () => {
-  const refresh = (await cookies()).get('refreshToken')?.value;
+  const cookie = await cookies();
+  const refresh = cookie.get('refreshToken')?.value;
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/reissue`, {
@@ -11,8 +13,10 @@ export const getAtFromRt = async () => {
       next: { revalidate: 3600 },
     });
 
-    return res.headers;
+    if (res.status === 500 || res.status === 401) return;
+
+    return res.headers.get('authorization') || '';
   } catch (err) {
-    console.log('error!');
+    throw new Error('error!');
   }
 };

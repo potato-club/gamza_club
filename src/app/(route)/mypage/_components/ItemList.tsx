@@ -2,14 +2,21 @@ import React from 'react';
 import Item from './Item';
 
 interface Props {
-  list: any[];
+  list: Project[];
 }
+interface Project {
+  id: number;
+  title: string;
+  port: number;
+  file: string;
+}
+
 const ItemList = ({ list }: Props) => {
   return (
     <>
       {list.length ? (
-        list.map((item: any, idx: number) => (
-          <Item {...item} id={idx} key={idx} />
+        list.map((item, idx: number) => (
+          <Item {...item} key={item.id} countId={idx + 1} />
         ))
       ) : (
         <div className="flex justify-center items-center h-full">
