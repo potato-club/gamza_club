@@ -7,7 +7,6 @@ import Third from './Third';
 import { PostSchema } from '@/app/_utils/validator/post';
 import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { usePostForm } from '@/app/_hooks/react-query/project/usePost';
-import { Collaborator } from '@/app/_types/RHFProps';
 
 const Process = () => {
   const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
@@ -47,9 +46,6 @@ const Process = () => {
             port: data.port,
             v_key: data.v_key,
             tag: data.tag,
-            collaborators: data.collaborators.map(
-              (item: Collaborator) => item.id
-            ),
           })
         }
         onPrev={() => setStep('Second')}

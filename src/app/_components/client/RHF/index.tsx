@@ -13,8 +13,6 @@ import {
   RHFCalendarProps,
   RHFFileInputProps,
   RHFCheckBoxProps,
-  RHFListSelectorProps,
-  Collaborator,
 } from '@/app/_types/RHFProps';
 import { Label } from '@/app/_components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/app/_components/ui/radio-group';
@@ -23,23 +21,15 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/app/_utils/utils';
 import { Button } from '@/app/_components/ui/button';
 import { Calendar } from '@/app/_components/ui/calendar';
-import { Checkbox } from '@/app/_components/ui/checkbox';
+import { Checkbox } from '../../ui/checkbox';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
-import { useFormContext, useWatch } from 'react-hook-form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/_components/ui/select';
-import CollaboratorList from './ui/CollaboratorList';
-import Image from 'next/image';
+import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
 
 export const RHFWrapper = ({
   children,
@@ -66,12 +56,20 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
+  defaultValue,
 }: RHFInputProps) => {
   const {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -120,13 +118,20 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
+  defaultValue,
 }: RHFFileInputProps) => {
   const {
     control,
     formState: { errors },
+    getValues,
+    setValue,
   } = useFormContext();
 
-  const formData = useWatch({ control });
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -146,7 +151,7 @@ export const RHFFileInput = ({
                 <FileInput
                   accept="application/zip"
                   field={field}
-                  fileName={formData.file && formData.file.name}
+                  fileName={getValues().file && getValues().file.name}
                 />
               </FormControl>
             </FormItem>
@@ -157,7 +162,7 @@ export const RHFFileInput = ({
                   accept="application/zip"
                   field={field}
                   placeholder={placeholder}
-                  fileName={formData.file && formData.file.name}
+                  fileName={getValues().file && getValues().file.name}
                 />
               </FormControl>
             </FormItem>
@@ -176,6 +181,7 @@ export const RHFRadioGroup = ({
   const {
     control,
     formState: { errors },
+    watch,
   } = useFormContext();
 
   return (
@@ -217,11 +223,23 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
+export const RHFCalendar = ({
+  name,
+  label,
+  id,
+  defaultValue,
+}: RHFCalendarProps) => {
   const {
     control,
     formState: { errors },
+    setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -310,89 +328,6 @@ export const RHFCheckbox = ({ name, label }: RHFCheckBoxProps) => {
             <RHFErrorSpan message={errors[name]?.message} />
           )}
         </FormItem>
-      )}
-    />
-  );
-};
-
-export const RHFListSelector = ({
-  name,
-  label,
-  userList,
-}: RHFListSelectorProps) => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-  const formData = useWatch({ control });
-
-  const users = userList.filter(
-    (user) =>
-      !formData.collaborators
-        .map((item: Collaborator) => item.id)
-        .includes(user.id)
-  );
-
-  return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <div className="flex flex-col gap-1">
-          <FormItem className="flex gap-x-10 items-center w-full justify-center">
-            <FormLabel className="w-[88px] font-normal text-[rgba(0,0,0,0.6)] text-sm">
-              {label}
-            </FormLabel>
-            <div className="flex flex-col gap-1">
-              <Select
-                onValueChange={(value) => {
-                  const user = users.find((item) => item.id === Number(value));
-                  if (user) field.onChange([...field.value, user]);
-                }}
-              >
-                <FormControl className="w-[225px] bg-white">
-                  <SelectTrigger>
-                    <input
-                      placeholder="유저를 선택해 주세요."
-                      defaultValue={'유저를 선택해 주세요.'}
-                      type="button"
-                      className="hover:cursor-pointer"
-                    />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="bg-white max-h-[130px] h-auto">
-                  {users.length ? (
-                    users.map((user) => (
-                      <SelectItem
-                        key={user.id}
-                        value={String(user.id)}
-                        className="hover:bg-gray-100 hover:cursor-pointer"
-                      >
-                        <div className="flex gap-3">
-                          <Image
-                            src={'/Logo.svg'}
-                            alt="감자"
-                            width={20}
-                            height={20}
-                          />
-                          <span>{`${user.name} (${user.studentId})`}</span>
-                        </div>
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <div className="flex justify-center items-center p-[20px_10px] text-[13px] font-bold">
-                      선택할 유저가 없습니다.
-                    </div>
-                  )}
-                </SelectContent>
-              </Select>
-            </div>
-          </FormItem>
-          <CollaboratorList
-            field={field}
-            selectUsers={formData.collaborators}
-          />
-        </div>
       )}
     />
   );

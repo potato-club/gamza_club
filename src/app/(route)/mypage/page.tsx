@@ -1,30 +1,30 @@
+import { Suspense, use } from 'react';
 import { redirect } from 'next/navigation';
 import { getAtFromRt } from '@/app/_utils/api/server/reissue.server';
-import { ErrorBoundary, Suspense } from '@suspensive/react';
-import InnerBox from './_components/InnerBox';
-import Error from './error';
-import Loading from './_components/Loading';
-import { use } from 'react';
-import TokenSetWrapper from '@/app/_components/client/TokenSetWrapper';
+import Loading from './loading';
+// import dynamic from 'next/dynamic';
 
-interface Props {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}
+// const InnerBox = dynamic(() => import('./_components/InnerBox'), {
+//   ssr: false,
+//   loading: () => <Loading />,
+// });
 
-const Mypage = ({ searchParams }: Props) => {
-  const { type } = use(searchParams);
-  const accessToken = use(getAtFromRt());
-  if (!accessToken) return redirect('/login');
+const Mypage = ({ searchParams }: any) => {
+  const dataType = searchParams.type;
+  const auth = use(authCheck());
+
+  if (!auth) return redirect('/login');
 
   return (
-    <TokenSetWrapper token={accessToken}>
-      <ErrorBoundary fallback={<Error />}>
-        <Suspense clientOnly fallback={<Loading />}>
-          <InnerBox dataType={type} />
-        </Suspense>
-      </ErrorBoundary>
-    </TokenSetWrapper>
+    <Suspense fallback={<Loading />}>
+      {/* <InnerBox dataType={dataType} /> */}
+    </Suspense>
   );
 };
 
 export default Mypage;
+
+const authCheck = async () => {
+  const resHeader = await getAtFromRt();
+  return resHeader;
+};
