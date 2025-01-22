@@ -7,21 +7,13 @@ export const useModifyForm = () => {
   const router = useRouter();
   const { mutate } = useMutation({
     mutationKey: ['modifyForm'],
-    mutationFn: ({
-      id,
-      title,
-      description,
-      status,
-      date,
-      collaborators,
-    }: ModifyForm) =>
+    mutationFn: ({ id, title, description, status, date }: ModifyForm) =>
       modifyProject({
         id,
         title,
         description,
         status,
         date,
-        collaborators,
       }),
     onSuccess: () => {
       alert('프로젝트가 정상적으로 수정되었습니다.');

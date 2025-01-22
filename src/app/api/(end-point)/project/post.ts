@@ -14,7 +14,8 @@ export const createProject = async ({ ...props }: PostForm) => {
     outerPort: props.port,
     tag: props.tag,
     variableKey: props.v_key || '',
-    collaborators: props.collaborators.join(','),
+    applicationType: 'CLIENT',
+    applicationName: props.title,
   };
 
   Object.entries(fields).forEach(([key, value]) => {

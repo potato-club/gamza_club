@@ -1,15 +1,17 @@
 import React from 'react';
 import MutateButton from './MutateButton';
-import { useDeleteUserProject } from '@/app/_hooks/react-query/project/useDelete';
-
-const Item = ({ ...props }) => {
-  const { mutate } = useDeleteUserProject();
-
+interface Project {
+  id: number;
+  title: string;
+  port: number;
+  file: string;
+}
+const Item = ({ ...props }: Project) => {
   return (
     <div className="flex justify-between items-center border border-stone-200 bg-white w-full h-[70px] px-5 py-3 rounded-xl">
       {/* 업로더 이름, 학과 */}
       <div className="flex gap-x-5 h-6">
-        <span>{props.countId.toString().padStart(4, '0')}</span>
+        <span>{props.id.toString().padStart(4, '0')}</span>
       </div>
 
       {/* 프로젝트 정보 */}
@@ -20,11 +22,7 @@ const Item = ({ ...props }) => {
       </div>
 
       {/* 삭제 버튼 */}
-      <MutateButton
-        value="삭제"
-        color="text-red-400"
-        onClick={() => mutate(props.id)}
-      />
+      <MutateButton value="삭제" color="text-red-400" />
     </div>
   );
 };
