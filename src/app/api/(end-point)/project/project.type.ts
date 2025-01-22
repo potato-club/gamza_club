@@ -21,4 +21,13 @@ export type ModifyForm = {
   description: string;
   status: string;
   date: DateType;
+  collaborators: number[];
+};
+
+export type AppModifyForm = {
+  id: number;
+  file: File;
+  port: string;
+  tag: string;
+  v_key: string;
 };

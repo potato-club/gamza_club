@@ -30,8 +30,7 @@ import {
   PopoverTrigger,
 } from '@/app/_components/ui/popover';
 import { FileInput, NormalInput } from './ui';
-import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import {
   Select,
   SelectContent,
@@ -67,20 +66,12 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
-  defaultValue,
 }: RHFInputProps) => {
   const {
     control,
     formState: { errors },
     watch,
-    setValue,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -129,20 +120,13 @@ export const RHFFileInput = ({
   name,
   label,
   placeholder,
-  defaultValue,
 }: RHFFileInputProps) => {
   const {
     control,
     formState: { errors },
-    getValues,
-    setValue,
   } = useFormContext();
 
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
+  const formData = useWatch({ control });
 
   return (
     <FormField
@@ -162,7 +146,7 @@ export const RHFFileInput = ({
                 <FileInput
                   accept="application/zip"
                   field={field}
-                  fileName={getValues().file && getValues().file.name}
+                  fileName={formData.file && formData.file.name}
                 />
               </FormControl>
             </FormItem>
@@ -173,7 +157,7 @@ export const RHFFileInput = ({
                   accept="application/zip"
                   field={field}
                   placeholder={placeholder}
-                  fileName={getValues().file && getValues().file.name}
+                  fileName={formData.file && formData.file.name}
                 />
               </FormControl>
             </FormItem>
@@ -192,7 +176,6 @@ export const RHFRadioGroup = ({
   const {
     control,
     formState: { errors },
-    watch,
   } = useFormContext();
 
   return (
@@ -234,24 +217,11 @@ export const RHFRadioGroup = ({
   );
 };
 
-export const RHFCalendar = ({
-  name,
-  label,
-  id,
-  defaultValue,
-}: RHFCalendarProps) => {
+export const RHFCalendar = ({ name, label, id }: RHFCalendarProps) => {
   const {
     control,
     formState: { errors },
-    setValue,
-    watch,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
 
   return (
     <FormField
@@ -349,25 +319,17 @@ export const RHFListSelector = ({
   name,
   label,
   userList,
-  defaultValue,
 }: RHFListSelectorProps) => {
   const {
     control,
     formState: { errors },
-    setValue,
-    watch,
   } = useFormContext();
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(name, defaultValue);
-    }
-  }, [defaultValue, name, setValue]);
+  const formData = useWatch({ control });
 
   const users = userList.filter(
     (user) =>
-      !watch()
-        .collaborators.map((item: Collaborator) => item.id)
+      !formData.collaborators
+        .map((item: Collaborator) => item.id)
         .includes(user.id)
   );
 
@@ -426,7 +388,10 @@ export const RHFListSelector = ({
               </Select>
             </div>
           </FormItem>
-          <CollaboratorList field={field} selectUsers={watch().collaborators} />
+          <CollaboratorList
+            field={field}
+            selectUsers={formData.collaborators}
+          />
         </div>
       )}
     />
