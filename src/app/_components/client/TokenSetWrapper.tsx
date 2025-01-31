@@ -11,6 +11,8 @@ const TokenSetWrapper = ({ children, token }: Props) => {
   useEffect(() => {
     if (token) {
       localStorage.setItem('accessToken', token);
+    } else {
+      localStorage.removeItem('accessToken');
     }
   }, [token]);
   return <>{children}</>;
