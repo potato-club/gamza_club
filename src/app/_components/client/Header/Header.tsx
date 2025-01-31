@@ -7,7 +7,6 @@ import OutgressIcon from '@public/Outgress.svg';
 import IngressIcon from '@public/Ingress.svg';
 import HeaderButton from './HeaderButton';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
 import { logout } from '@/app/_hooks/server/logout';
 
 const Header = () => {
