@@ -5,18 +5,11 @@ interface Props {
   list: any;
 }
 const ProjectItemList = ({ list }: Props) => {
-  const projectData = {
-    title: "HENEIN",
-    describe: "헤네인입니다요.",
-    status: "완료",
-    port: 8080,
-    file: "donggyun.zip",
-  };
   return (
     <>
       {list.data.length ? (
         list.data.map((item: any, idx: any) => (
-          <ProjectItem {...item} project={projectData} key={idx} />
+          <ProjectItem {...item} key={idx} />
         ))
       ) : (
         <div className="flex justify-center items-center h-full">
