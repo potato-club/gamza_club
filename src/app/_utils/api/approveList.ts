@@ -17,3 +17,7 @@ export const getAdminProjectList = async (type: string) => {
   const res = await apiClient.get(`/admin/project/${type}/list`);
   return res.data.content;
 };
+export const getAdminApproveList = async () => {
+  const res = await apiClient.get(`/admin/project/create/approve/list`);
+  return res;
+};
