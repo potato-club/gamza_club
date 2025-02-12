@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import '../_styles/globals.css';
 import localFont from 'next/font/local';
 import QueryProvider from '../_components/provider/QueryProvider';
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={pretendard.className} suppressHydrationWarning={true}>
         <QueryProvider>{children}</QueryProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

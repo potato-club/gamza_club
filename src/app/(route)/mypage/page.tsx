@@ -4,25 +4,27 @@ import { ErrorBoundary, Suspense } from '@suspensive/react';
 import InnerBox from './_components/InnerBox';
 import Error from './error';
 import Loading from './_components/Loading';
+import { use } from 'react';
+import TokenSetWrapper from '@/app/_components/client/TokenSetWrapper';
 
-const Mypage = async ({ searchParams }: any) => {
-  const { type } = await searchParams;
-  const auth = await authCheck();
+interface Props {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}
 
-  if (!auth) return redirect('/login');
+const Mypage = ({ searchParams }: Props) => {
+  const { type } = use(searchParams);
+  const accessToken = use(getAtFromRt());
+  if (!accessToken) return redirect('/login');
 
   return (
-    <ErrorBoundary fallback={<Error />}>
-      <Suspense clientOnly fallback={<Loading />}>
-        <InnerBox dataType={type} />
-      </Suspense>
-    </ErrorBoundary>
+    <TokenSetWrapper token={accessToken}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense clientOnly fallback={<Loading />}>
+          <InnerBox dataType={type} />
+        </Suspense>
+      </ErrorBoundary>
+    </TokenSetWrapper>
   );
 };
 
 export default Mypage;
-
-const authCheck = async () => {
-  const resHeader = await getAtFromRt();
-  return !!resHeader;
-};

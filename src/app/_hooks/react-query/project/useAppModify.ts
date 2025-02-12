@@ -1,27 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { ModifyForm } from '@/app/api/(end-point)/project/project.type';
-import { modifyProject } from '@/app/api/(end-point)/project/put';
+import { AppModifyForm } from '@/app/api/(end-point)/project/project.type';
+import { appModifyProject } from '@/app/api/(end-point)/project/put';
 
-export const useModifyForm = () => {
+export const useAppModify = () => {
   const router = useRouter();
   const { mutate } = useMutation({
     mutationKey: ['modifyForm'],
-    mutationFn: ({
-      id,
-      title,
-      description,
-      status,
-      date,
-      collaborators,
-    }: ModifyForm) =>
-      modifyProject({
+    mutationFn: ({ id, file, port, v_key, tag }: AppModifyForm) =>
+      appModifyProject({
         id,
-        title,
-        description,
-        status,
-        date,
-        collaborators,
+        file,
+        port,
+        v_key,
+        tag,
       }),
     onSuccess: () => {
       alert('프로젝트가 정상적으로 수정되었습니다.');

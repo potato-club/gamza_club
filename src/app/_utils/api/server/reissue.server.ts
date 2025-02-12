@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 
 export const getAtFromRt = async () => {
   const cookie = await cookies();
@@ -14,8 +15,8 @@ export const getAtFromRt = async () => {
 
     if (res.status === 500 || res.status === 401) return;
 
-    return res.headers;
+    return res.headers.get('authorization') || '';
   } catch (err) {
-    console.log('error!');
+    throw new Error('error!');
   }
 };
