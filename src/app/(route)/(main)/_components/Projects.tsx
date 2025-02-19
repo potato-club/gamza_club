@@ -18,21 +18,28 @@ const Projects = () => {
 
   return (
     <TokenSetWrapper token={accessToken || ''}>
-      <div></div>
       <Carousel className="w-[750px]">
         <CarouselContent>
-          {Array.from({ length: Math.ceil(list.contents.length / 4) }).map(
-            (_, index) => (
-              <CarouselItem key={index}>
-                <div className="flex flex-wrap gap-6 h-[650px] border border-stone-200 bg-white rounded-3xl mt-6 py-6 px-10">
-                  {list.contents
-                    .slice(index * 4, index * 4 + 4)
-                    .map((item: Item) => (
-                      <ProjectItem key={item.id} {...item} />
-                    ))}
-                </div>
-              </CarouselItem>
+          {list?.contents?.length ? (
+            Array.from({ length: Math.ceil(list.contents.length / 4) }).map(
+              (_, index) => (
+                <CarouselItem key={index}>
+                  <div className="flex flex-wrap gap-6 h-[650px] border border-stone-200 bg-white rounded-3xl mt-6 py-6 px-10">
+                    {list.contents
+                      .slice(index * 4, index * 4 + 4)
+                      .map((item: Item) => (
+                        <ProjectItem key={item.id} {...item} />
+                      ))}
+                  </div>
+                </CarouselItem>
+              )
             )
+          ) : (
+            <CarouselItem>
+              <div className="flex justify-center items-center w-full h-[650px] text-lg text-gray-500 border border-stone-200 bg-white rounded-3xl mt-6 py-6 px-10">
+                등록된 프로젝트가 없습니다.
+              </div>
+            </CarouselItem>
           )}
         </CarouselContent>
         <CarouselPrevious />
