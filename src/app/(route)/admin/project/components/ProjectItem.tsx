@@ -9,15 +9,13 @@ interface Props {
   major: string;
   status: string;
   description: string;
-  project: Project;
-}
-interface Project {
   title: string;
   describe: string;
-  status: string;
+  state: string;
   port: number;
-  file: string;
+  fileUrl: string;
 }
+
 const ProjectItem = ({ ...props }: Props) => {
   return (
     <div className="flex justify-between items-center border border-stone-200 bg-white w-full h-[70px] px-5 py-3 rounded-xl">
@@ -33,11 +31,17 @@ const ProjectItem = ({ ...props }: Props) => {
       </div>
 
       {/* 프로젝트 정보 */}
-      <div className="w-[380px] text-ellipsis overflow-hidden">
-        <span className="leading-8 ">
-          {props.name} / {props.status} / {props.project.port}/{" "}
-          {props.project.file} / {props.description}
-        </span>
+      <div className="w-[380px] text-ellipsis overflow-hidden whitespace-nowrap">
+        <div className="leading-8">
+          {props.port}/{props.description}/
+          <a
+            href={props.fileUrl}
+            download
+            className="text-blue-500 underline ml-2"
+          >
+            .zip파일 다운로드
+          </a>
+        </div>
       </div>
 
       {/* 버튼 */}

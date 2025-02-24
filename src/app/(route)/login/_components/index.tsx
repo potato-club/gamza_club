@@ -8,7 +8,13 @@ import { useRouter } from "next/navigation";
 import { useLogin } from "@/app/_hooks/query/useLogin";
 
 const Login = () => {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   const { handleSubmit } = methods;
 
   const { mutate, isError, error } = useLogin();
@@ -22,8 +28,18 @@ const Login = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-[350px] h-[176px] flex flex-col gap-4">
-            <RHFInput name="email" placeholder="이메일" size="large" />
-            <RHFInput name="password" placeholder="비밀번호" size="large" />
+            <RHFInput
+              name="email"
+              placeholder="이메일"
+              size="large"
+              defaultValue=""
+            />
+            <RHFInput
+              name="password"
+              placeholder="비밀번호"
+              size="large"
+              defaultValue=""
+            />
             <div className={` flex items-center justify-end gap-[20px] `}>
               <CardButton
                 text="로그인"

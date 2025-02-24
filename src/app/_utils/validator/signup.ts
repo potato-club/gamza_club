@@ -5,7 +5,7 @@ const passwordPattern = /^[\w~`!@#$^*()_{}[\]:,./?]{8,15}$/;
 export const SignUpSchema = {
   first: z.object({
     terms: z.boolean().refine((value) => value === true, {
-      message: "약관에 동의해야 합니다.",
+      message: "약관에 동의해주세요",
     }),
   }),
   second: z.object({

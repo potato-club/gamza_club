@@ -10,9 +10,10 @@ import Loading from "../_components/Loading";
 const AdminProjectList = () => {
   const searchParams = useSearchParams();
   const dataType =
-    (searchParams.get("type") as "create" | "modify") ?? "create";
+    (searchParams.get("type") as "create" | "modify" | "pending") ?? "create";
   const data = useGetProjectList(dataType);
 
+  console.log(data);
   return (
     <div>
       <ButtonList dataType={dataType} />
