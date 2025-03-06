@@ -60,6 +60,8 @@ const Process = () => {
             collaborators: data.collaborators.map(
               (item: Collaborator) => item.id
             ),
+            projectType: data.projectType,
+            platformId: data.platform.platformId,
           })
         }
         onPrev={() => setStep('Second')}

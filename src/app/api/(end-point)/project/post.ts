@@ -15,6 +15,8 @@ export const createProject = async ({ ...props }: PostForm) => {
     tag: props.tag,
     variableKey: props.v_key || '',
     collaborators: props.collaborators.join(','),
+    projectType: props.projectType,
+    platformId: props.platformId.toString(),
   };
 
   Object.entries(fields).forEach(([key, value]) => {

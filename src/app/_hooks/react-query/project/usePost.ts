@@ -17,6 +17,8 @@ export const usePostForm = () => {
       v_key,
       tag,
       collaborators,
+      projectType,
+      platformId,
     }: PostForm) =>
       createProject({
         zip,
@@ -28,6 +30,8 @@ export const usePostForm = () => {
         v_key,
         tag,
         collaborators,
+        projectType,
+        platformId,
       }),
     onSuccess: () => {
       alert(

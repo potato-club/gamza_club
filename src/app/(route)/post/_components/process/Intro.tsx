@@ -3,21 +3,21 @@ import {
   RHFRadioGroup,
 } from '@/app/_components/client/RHF';
 import { CardButton } from '@/app/_components/server/GamzaCard';
-import React from 'react';
-import { Button } from '@/app/_components/ui/button';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/app/_components/ui/dialog';
-import { Input } from '@/app/_components/ui/input';
-import { Label } from '@/app/_components/ui/label';
+import { usePlatformQuery } from '@/app/_hooks/react-query/platform';
 
 const Intro = () => {
+  const [name, setName] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  const { query, mutation } = usePlatformQuery();
+
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 py-7">
@@ -40,15 +40,14 @@ const Intro = () => {
         <RHFPlatformSelector
           name="platform"
           label="플랫폼 선택"
-          platformList={[
-            { platformId: 1, platformName: 'platform1' },
-            { platformId: 2, platformName: 'platform2' },
-            { platformId: 3, platformName: 'platform3' },
-          ]}
+          platformList={query.data.data.platformResponseDtos}
         />
 
-        <Dialog>
-          <DialogTrigger className="border border-gray-300 rounded-md py-1 w-[150px] hover:shadow-xl mx-auto">
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger
+            className="border border-gray-300 rounded-md py-1 w-[150px] hover:shadow-xl mx-auto"
+            onClick={() => setOpen(true)}
+          >
             플랫폼 생성하기
           </DialogTrigger>
           <DialogContent className="bg-white w-[400px]">
@@ -58,10 +57,15 @@ const Intro = () => {
             <input
               placeholder="생설할 플랫폼 이름을 입력하세요."
               className="py-2 px-2 border border-gray-300 rounded-lg w-full outline-none my-2"
+              onChange={(e) => setName(e.target.value)}
             />
             <button
               className="bg-[#36AE5A] rounded-lg px-2 py-1 font-medium text-white mx-auto"
-              onClick={() => {}}
+              onClick={() => {
+                mutation.mutate(name, {
+                  onSuccess: () => setOpen(false),
+                });
+              }}
             >
               생성하기
             </button>
