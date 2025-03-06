@@ -10,6 +10,13 @@ const collaboratorSchema = z.object({
 });
 
 export const PostSchema = {
+  intro: z.object({
+    projectType: z.enum(['FRONT', 'BACK', 'WAIT']),
+    platform: z.object({
+      platformId: z.number().default(0),
+      platformName: z.string().default(''),
+    }),
+  }),
   first: z.object({
     title: z
       .string()
