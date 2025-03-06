@@ -13,6 +13,8 @@ export type PostForm = {
   v_key: string | null;
   tag: string;
   collaborators: number[];
+  projectType: 'FRONT' | 'BACK';
+  platformId: number;
 };
 
 export type ModifyForm = {

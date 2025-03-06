@@ -8,19 +8,29 @@ import { PostSchema } from '@/app/_utils/validator/post';
 import { useFormFunnel } from '@/app/_hooks/funnel/useFormFunnel';
 import { usePostForm } from '@/app/_hooks/react-query/project/usePost';
 import { Collaborator } from '@/app/_types/RHFProps';
+import Intro from './Intro';
 
 const Process = () => {
-  const { FormFunnel, setStep } = useFormFunnel<'First' | 'Second' | 'Third'>(
-    'First'
-  );
+  const { FormFunnel, setStep } = useFormFunnel<
+    'Intro' | 'First' | 'Second' | 'Third'
+  >('Intro');
   const { mutate } = usePostForm();
 
   return (
     <FormFunnel>
       <FormFunnel.Step
+        name="Intro"
+        schema={PostSchema.intro}
+        onNext={() => setStep('First')}
+      >
+        <Intro />
+      </FormFunnel.Step>
+
+      <FormFunnel.Step
         name="First"
         schema={PostSchema.first}
         onNext={() => setStep('Second')}
+        onPrev={() => setStep('Intro')}
       >
         <First />
       </FormFunnel.Step>
@@ -50,6 +60,8 @@ const Process = () => {
             collaborators: data.collaborators.map(
               (item: Collaborator) => item.id
             ),
+            projectType: data.projectType,
+            platformId: data.platform.platformId,
           })
         }
         onPrev={() => setStep('Second')}

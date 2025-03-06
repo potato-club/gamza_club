@@ -80,3 +80,14 @@ export interface RHFListSelectorProps {
   userList: Collaborator[];
   defaultValue?: Collaborator[];
 }
+
+type Platform = {
+  platformId: number;
+  platformName: string;
+};
+export interface RHFPlatformSelectorProps {
+  name: string;
+  label: string;
+  platformList: Platform[];
+  defaultValue?: Platform[];
+}

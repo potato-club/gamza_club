@@ -41,6 +41,8 @@ export function useFormFunnel<T>(initialStep: T): UseFormFunnelReturn<T> {
       }
     }, [formData]);
 
+    console.log(formData);
+
     return (
       <RHFWrapper
         form={form}

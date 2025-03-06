@@ -13,7 +13,7 @@ const Header = () => {
   const accessToken = use(getAtFromRt());
 
   return (
-    <header className="absoulte top-0 z-50 flex justify-between pt-[24px] w-[1140px] m-[0_auto]">
+    <header className="flex justify-between items-center py-[12px] w-full max-w-[1140px] m-[0_auto]">
       <div className="flex">
         <Link href={'/'} className="w-[40px] h-[40px]">
           <Image src="/Logo.svg" alt="gamza-logo" width={40} height={40} />
@@ -47,7 +47,7 @@ const Header = () => {
             />
           </>
         ) : (
-          <Link href={'/login'}>
+          <Link href={'/login'} className="w-[40px] h-[40px]">
             <HeaderButton imageSrc={IngressIcon} desc={'로그인'} />
           </Link>
         )}
