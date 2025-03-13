@@ -29,6 +29,7 @@ export interface RHFInputProps {
   type?: HTMLInputTypeAttribute;
   size: 'large' | 'medium' | 'small';
   defaultValue?: string;
+  disabled?: boolean;
 }
 
 export interface RHFFileInputProps {

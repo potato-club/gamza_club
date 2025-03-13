@@ -21,7 +21,10 @@ export const PostSchema = {
     title: z
       .string()
       .min(2, '프로젝트 이름은 두글자 이상이어야 합니다.')
-      .regex(/^[a-z]+$/, '프로젝트 이름은 소문자로만 이루어져야 합니다.')
+      .regex(
+        /^[a-z0-9]+$/,
+        '프로젝트 이름은 소문자 또는 숫자로 이루어져야 합니다.'
+      )
       .default(''),
     describe: z
       .string()
