@@ -1,8 +1,15 @@
 import { CardButton } from '@/app/_components/server/GamzaCard';
 import React from 'react';
 import { RHFFileInput, RHFInput } from '@/app/_components/client/RHF';
+import { useFormContext } from 'react-hook-form';
 
 const Third = () => {
+  const {
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-col gap-y-6 items-center p-7">
@@ -22,6 +29,7 @@ const Third = () => {
           size="medium"
           placeholder="ex) salt 키"
           label="환경 변수"
+          disabled={watch().projectType === 'FRONT'}
         />
         <RHFInput
           name="tag"

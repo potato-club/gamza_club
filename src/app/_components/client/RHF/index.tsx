@@ -68,6 +68,7 @@ export const RHFInput = ({
   placeholder,
   size,
   type,
+  disabled,
 }: RHFInputProps) => {
   const {
     control,
@@ -96,6 +97,12 @@ export const RHFInput = ({
                   type={type}
                   placeholder={placeholder}
                   value={watch(name)}
+                  disabled={disabled}
+                  className={`${
+                    disabled
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      : ''
+                  }`}
                 />
               </FormControl>
             </FormItem>
@@ -108,6 +115,12 @@ export const RHFInput = ({
                   type={type}
                   placeholder={placeholder}
                   value={watch(name)}
+                  disabled={disabled}
+                  className={`${
+                    disabled
+                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      : ''
+                  }`}
                 />
               </FormControl>
             </FormItem>

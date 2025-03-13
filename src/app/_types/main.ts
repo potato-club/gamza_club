@@ -12,4 +12,6 @@ export type Item = {
   endedDate: string;
   isCollaborator: boolean;
   route: string | null;
+  containerId: string;
+  projectType: 'FRONT' | 'BACK' | 'WAIT';
 };
