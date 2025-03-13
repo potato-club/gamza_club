@@ -22,6 +22,7 @@ const ProjectItem = ({ ...props }: Item) => {
     startedDate,
     endedDate,
     route,
+    projectType,
   } = props;
 
   return (
@@ -29,6 +30,7 @@ const ProjectItem = ({ ...props }: Item) => {
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{`${startedDate} ~ ${endedDate}`}</CardDescription>
+        <ProjectTypeLabel projectType={projectType} />
       </CardHeader>
       <CardContent>{description}</CardContent>
       <CardFooter className="gap-x-3">
@@ -47,3 +49,29 @@ const ProjectItem = ({ ...props }: Item) => {
 };
 
 export default ProjectItem;
+
+const ProjectTypeLabel = ({
+  projectType,
+}: {
+  projectType: 'FRONT' | 'BACK' | 'WAIT';
+}) => {
+  const LABEL_COLOR = {
+    FRONT: 'bg-[#D3F8FF]',
+    BACK: 'bg-[#FFD2F3]',
+    WAIT: 'bg-[#ddd]',
+  };
+
+  const LABEL_TEXT = {
+    FRONT: '프론트엔드',
+    BACK: '백엔드',
+    WAIT: '대기',
+  };
+
+  return (
+    <div
+      className={`text-xs rounded-lg max-w-fit px-2 py-1 font-semibold ${LABEL_COLOR[projectType]}`}
+    >
+      {LABEL_TEXT[projectType]}
+    </div>
+  );
+};
