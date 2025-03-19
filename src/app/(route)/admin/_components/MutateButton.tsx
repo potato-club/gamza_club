@@ -4,7 +4,7 @@ interface Props {
   value: string;
   color: string;
   id: number;
-  type: "user" | "project";
+  type: "user" | "project" | "pending";
 }
 const MutateButton = ({ value, color, id, type }: Props) => {
   const { mutate } = useAcceptUser(id, type, value); // props로 넘어오는 type으로 project 인지 user 인지 확인후 value 로 승인,거부 결정
