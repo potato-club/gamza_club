@@ -33,7 +33,7 @@ const ProjectItem = ({ ...props }: Props) => {
       {/* 프로젝트 정보 */}
       <div className="w-[380px] text-ellipsis overflow-hidden whitespace-nowrap">
         <div className="leading-8">
-          {props.port}/{props.description}/
+          {props.name}
           <a
             href={props.fileUrl}
             download
