@@ -9,9 +9,9 @@ export const useLogin = () => {
     mutationKey: ["login"],
     mutationFn: (data: LoginData) => login(data),
     onSuccess: (response) => {
+      localStorage.setItem("accessToken", response?.data.authorization);
       alert("로그인에 성공했습니다.");
       router.push("/");
-      localStorage.setItem("accessToken", response?.data.authorization);
     },
     onError: (error) => {
       console.error("로그인 실패:", error);

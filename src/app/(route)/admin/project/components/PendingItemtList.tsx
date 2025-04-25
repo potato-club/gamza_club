@@ -1,14 +1,16 @@
 "use client";
 import React, { use } from "react";
-import ProjectItem from "./ProjectItem";
+import PendingItem from "./PendingItem";
+
 interface Props {
   list: any;
 }
-const ProjectItemList = ({ list }: Props) => {
+
+const PendingItemList = ({ list }: Props) => {
   return (
     <>
       {list.length ? (
-        list.map((item: any, idx: any) => <ProjectItem {...item} key={idx} />)
+        list.map((item: any, idx: any) => <PendingItem {...item} key={idx} />)
       ) : (
         <div className="flex justify-center items-center h-full">
           <span className="text-xl font-bold">
@@ -20,4 +22,4 @@ const ProjectItemList = ({ list }: Props) => {
   );
 };
 
-export default ProjectItemList;
+export default PendingItemList;
