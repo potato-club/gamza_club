@@ -8,7 +8,13 @@ export const useAcceptUser = (id: number, type: string, value: string) => {
     mutationKey: ["userControl"],
     mutationFn: () => userControl(id, type, value),
     onSuccess: () => {
-      alert(`${id}의 학생이 ${value} 되었습니다`);
+      let A;
+      if (type === "student") {
+        A = "학생이";
+      } else if (type === "project") {
+        A = "프로젝트가";
+      }
+      alert(`${id}의 ${A}${value} 되었습니다`);
       queryClient.invalidateQueries({ queryKey: ["adminUserList"] }); //데이터를 가져오는 query 에서 queryKey를  queryKey: ["userList"],  이렇게 객체 형식으로 넘겼으면 invalidata 에서도 객체 형식으로 넘겨줘야 한다
     },
     onError: (error) => {
