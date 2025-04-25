@@ -7,10 +7,8 @@ interface Props {
 const ProjectItemList = ({ list }: Props) => {
   return (
     <>
-      {list.data.length ? (
-        list.data.map((item: any, idx: any) => (
-          <ProjectItem {...item} key={idx} />
-        ))
+      {list.length ? (
+        list.map((item: any, idx: any) => <ProjectItem {...item} key={idx} />)
       ) : (
         <div className="flex justify-center items-center h-full">
           <span className="text-xl font-bold">
