@@ -15,14 +15,17 @@ const CardNumber = () => {
 
   const handleSubmit = async (data: any) => {
     try {
-      const response = await axios.post('http://3.34.207.58:8080/user/signup', {
-        familyName: data.firstName,
-        givenName: data.lastName,
-        email: data.email,
-        password: data.password,
-        major: data.major,
-        studentId: data.studentNumber,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/signup`,
+        {
+          familyName: data.firstName,
+          givenName: data.lastName,
+          email: data.email,
+          password: data.password,
+          major: data.major,
+          studentId: data.studentNumber,
+        }
+      );
       alert('회원가입이 완료되었습니다!');
       router.push('/login');
     } catch (error) {
